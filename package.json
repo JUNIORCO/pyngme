@@ -7,17 +7,28 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "bunx biome format --write app/"
+    "format": "bunx biome format --write app/",
+    "trigger": "bunx trigger.dev@beta dev",
+    "prisma:migrate": "prisma migrate dev --name dev",
+    "prisma:migrate:deploy": "prisma migrate deploy"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.3.7",
     "@clerk/themes": "^2.1.25",
+    "@prisma/client": "^5.19.1",
+    "@trigger.dev/sdk": "3.0.0-beta.56",
+    "@vercel/postgres": "^0.9.0",
+    "@vercel/speed-insights": "^1.0.12",
     "color-parse": "^2.0.2",
     "framer-motion": "^11.3.31",
     "lucide-react": "^0.438.0",
     "next": "14.2.7",
+    "prisma": "^5.19.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hook-form": "^7.53.0",
+    "react-hot-toast": "^2.4.1",
+    "resend": "^4.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",

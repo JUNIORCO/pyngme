@@ -40,3 +40,5 @@ bun.lockb
 
 # .env
 .env
+
+.trigger

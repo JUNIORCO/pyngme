@@ -4,14 +4,17 @@ import "./globals.css";
 import { THEMES, THEME_COOKIE_NAME } from "@/theme/constants";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Theme } from "daisyui";
 import { cookies } from "next/headers";
+import { Toaster } from "react-hot-toast";
 import Header from "./components/header";
 import {
   getBackground,
   getErrorColor,
   getPrimaryColor,
   getSuccessColor,
+  getTextColor,
   getWarningColor,
   isLightTheme,
 } from "./theme/helpers";
@@ -51,6 +54,15 @@ export default function RootLayout({
           <main>
             <Header />
             <main>{children}</main>
+            <Toaster
+              toastOptions={{
+                style: {
+                  background: getBackground(theme),
+                  color: getTextColor(theme),
+                },
+              }}
+            />
+            <SpeedInsights />
           </main>
         </body>
       </html>

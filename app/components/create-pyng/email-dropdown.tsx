@@ -1,13 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { type UseControllerProps, useController } from "react-hook-form";
+import type { IFormInput } from "./types";
 
-type EmailDropdownProps = {
+type EmailDropdownProps = UseControllerProps<IFormInput> & {
   userEmail: string | undefined;
 };
 
-export default function EmailDropdown({ userEmail }: EmailDropdownProps) {
-  const [selectedValue, setSelectedValue] = useState("");
+export default function EmailDropdown({
+  userEmail,
+  ...props
+}: EmailDropdownProps) {
+  const { field, fieldState } = useController(props);
+
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -33,24 +39,37 @@ export default function EmailDropdown({ userEmail }: EmailDropdownProps) {
 
   return (
     <div className="dropdown w-full" ref={dropdownRef}>
-      <label className="input input-bordered flex items-center gap-8">
-        Email
+      <label
+        className={`input input-bordered ${
+          fieldState.error ? "input-error" : ""
+        } flex items-center gap-8`}
+      >
+        <p className="font-medium">Email</p>
         <input
+          {...field}
           type="text"
           placeholder="john@doe.com"
           className="grow w-full"
-          value={selectedValue}
-          onChange={(e) => setSelectedValue(e.target.value)}
           onClick={toggleDropdown}
+          value={field.value || ""}
         />
       </label>
+      {fieldState.error && (
+        <div className="label justify-end pb-0">
+          <span className="label-text-alt text-error">
+            {fieldState.error.type === "required"
+              ? "Email is required"
+              : fieldState.error?.message}
+          </span>
+        </div>
+      )}
       {showDropdown && (
         <ul className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full">
           <li>
             <button
               type="button"
               onClick={() => {
-                setSelectedValue(userEmail);
+                field.onChange(userEmail);
                 setIsOpen(false);
               }}
             >

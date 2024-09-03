@@ -56,21 +56,12 @@ const rgbToHex = (rgb: TRGB): string => {
 
 const oklchToHex = (oklch: string): string | undefined => {
   const parsed = parse(oklch);
-  if (oklch === "oklch(49.12% 0.3096 275.75)") {
-    console.log("parsed: ", parsed);
-  }
   const rgb = oklchToRGB({
     l: parsed.values[0],
     c: parsed.values[1],
     h: parsed.values[2],
   });
-  if (oklch === "oklch(49.12% 0.3096 275.75)") {
-    console.log("rgb: ", rgb);
-  }
   const hex = rgbToHex(rgb);
-  if (oklch === "oklch(49.12% 0.3096 275.75)") {
-    console.log("hex: ", hex);
-  }
   return isHexColor(hex) ? hex : undefined;
 };
 
@@ -110,7 +101,9 @@ export const getSuccessColor = (theme: Theme): string | undefined => {
 };
 
 export const getTextColor = (theme: Theme): string | undefined => {
-  const text = DaisyThemes[theme]["base-content"];
+  const text =
+    DaisyThemes[theme]["base-content"] ||
+    (isLightTheme(theme) ? "#000000" : "#ffffff");
   return isHexColor(text) ? text : oklchToHex(text);
 };
 
