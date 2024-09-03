@@ -114,6 +114,10 @@ export const getTextColor = (theme: Theme): string | undefined => {
   return isHexColor(text) ? text : oklchToHex(text);
 };
 
-export const getRadius = (theme: Theme): string | undefined => {
-  return DaisyThemes[theme]["--rounded-box"];
+export const getRadius = (theme: Theme): string => {
+  return (
+    DaisyThemes[theme]["--rounded-box"] ||
+    DaisyThemes[theme]["--rounded-btn"] ||
+    "0.5rem"
+  );
 };
