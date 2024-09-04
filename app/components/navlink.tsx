@@ -9,11 +9,13 @@ export default function NavLink({
 }: { href: string; children: React.ReactNode }) {
   const pathname = usePathname();
   return (
-    <Link
-      href={href}
-      className={`hover:underline ${pathname === href ? "underline" : ""}`}
-    >
-      {children}
+    <Link href={href}>
+      <button
+        type="button"
+        className={`btn ${pathname === href ? "btn-neutral" : "btn-ghost"}`}
+      >
+        {children}
+      </button>
     </Link>
   );
 }
