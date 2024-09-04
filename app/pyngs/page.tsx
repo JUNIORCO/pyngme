@@ -10,7 +10,7 @@ export default async function Pyngs() {
 
   if (!user) {
     return (
-      <div className="mt-16 px-32 py-8 flex flex-col gap-4">
+      <div className="mt-16 px-4 md:px-32 py-8 flex flex-col gap-4">
         <Title>Pyngs</Title>
         <p>Sign in to create your first Pyng!</p>
       </div>
