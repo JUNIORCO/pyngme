@@ -41,7 +41,13 @@ jobs:
       - name: Prisma Migrate Deploy
         run: npx prisma migrate deploy
 
+      - name: Check for changes in trigger folder
+        id: check_trigger_changes
+        run: |
+          git diff --quiet HEAD^ HEAD -- app/trigger/ || echo "changes=true" >> $GITHUB_OUTPUT
+
       - name: Trigger Deploy
+        if: steps.check_trigger_changes.outputs.changes == 'true'
         run: npx trigger.dev@beta deploy
 
       - name: Deploy Project Artifacts to Vercel

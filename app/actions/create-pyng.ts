@@ -53,6 +53,8 @@ For example, a user can set up "email <> when <a new blog post is release> for <
       [EveryOption.Day]: "0 0 * * *",
     };
 
+    console.log("everyOptionToCronMap", everyOptionToCronMap);
+
     const schedulePayload = {
       task: pyngTask.id,
       cron: everyOptionToCronMap[data.every],
@@ -61,11 +63,15 @@ For example, a user can set up "email <> when <a new blog post is release> for <
       deduplicationKey: `${pyng.id}-pyng`, //this makes it impossible to have two schedules for the same pyng
     };
 
+    console.log("schedulePayload", schedulePayload);
+
     // trigger the first run
     const { id: runId } = await firstRun.trigger({
       pyngId: pyng.id,
       schedulePayload,
     });
+
+    console.log("runId: ", runId);
 
     const maxAttempts = 10;
     const pollInterval = 1000;
