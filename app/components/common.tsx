@@ -2,7 +2,7 @@ export const PageContentContainer = ({
   children,
 }: { children: React.ReactNode }) => {
   return (
-    <div className="mt-16 px-4 md:px-32 py-8 flex flex-col gap-16">
+    <div className="mt-16 px-4 md:px-32 py-8 flex flex-col gap-12">
       {children}
     </div>
   );

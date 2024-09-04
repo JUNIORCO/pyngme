@@ -22,7 +22,7 @@ export default function Auth({ isSignedIn }: AuthProps) {
     <UserProfile />
   ) : (
     <Link href={Routes.signUp}>
-      <button type="button" className="btn btn-primary">
+      <button type="button" className="btn btn-outline">
         Sign Up
       </button>
     </Link>

@@ -21,7 +21,7 @@ export default async function Header() {
               <p className="text-lg font-bold select-none">pyngme</p>
             </Link>
             <div className="flex-none hidden lg:block">
-              <ul className="flex gap-8">
+              <ul className="flex gap-4">
                 <li>
                   <NavLink href={Routes.hub}>Hub</NavLink>
                 </li>
