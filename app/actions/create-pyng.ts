@@ -68,7 +68,7 @@ For example, a user can set up "email <> when <a new blog post is release> for <
     });
 
     const maxAttempts = 10;
-    const pollInterval = 1000; // 1 second
+    const pollInterval = 1000;
 
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
       const result = await runs.retrieve(runId);
