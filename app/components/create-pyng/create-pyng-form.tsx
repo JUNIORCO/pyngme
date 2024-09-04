@@ -69,7 +69,7 @@ export default function CreatePyngForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 w-[40%] self-center"
+      className="flex flex-col gap-4 w-full md:w-[40%] self-center"
     >
       <div className="flex flex-col gap-4">
         <EmailDropdown

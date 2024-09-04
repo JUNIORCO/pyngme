@@ -8,7 +8,7 @@ export default async function CreatePyng() {
   const userId = user?.id;
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-4">
       <Title>Create a Pyng</Title>
       <CreatePyngForm userEmail={userEmail} userId={userId} />
     </div>
