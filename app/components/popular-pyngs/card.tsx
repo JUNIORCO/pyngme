@@ -26,7 +26,7 @@ export default function PopularPyngsCard({
 
   return (
     <div
-      className={`card w-40 sm:w-72 h-[22rem] rounded-box ${bgColorMap[type]}`}
+      className={`card w-64 sm:w-72 h-[22rem] rounded-box ${bgColorMap[type]}`}
     >
       <div className="card-body">
         <h2 className="card-title justify-center">{title}</h2>
