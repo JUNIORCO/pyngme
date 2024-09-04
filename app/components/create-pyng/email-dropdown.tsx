@@ -47,6 +47,7 @@ export default function EmailDropdown({
         <p className="font-medium">Email</p>
         <input
           {...field}
+          id="email-input"
           type="text"
           placeholder="john@doe.com"
           className="grow w-full"

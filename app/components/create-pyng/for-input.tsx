@@ -17,6 +17,7 @@ export default function ForInput({
         <p className="font-medium">For</p>
         <input
           {...field}
+          id="for-input"
           type="text"
           className="grow w-full"
           placeholder="johnswebsite.com"

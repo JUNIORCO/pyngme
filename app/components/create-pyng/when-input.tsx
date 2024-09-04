@@ -17,6 +17,7 @@ export default function WhenInput({
         <p className="font-medium">When</p>
         <input
           {...field}
+          id="when-input"
           type="text"
           className="grow w-full"
           placeholder="a new blog post is published"

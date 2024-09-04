@@ -1,38 +1,68 @@
-import type { ComponentProps } from "react";
+"use client";
 
-type CardType =
-  | "primary"
-  | "secondary"
-  | "accent"
-  | "success"
-  | "error"
-  | "warning";
+import { useEffect, useRef } from "react";
 
 export default function PopularPyngsCard({
   title,
-  type,
+  content,
+  userEmail,
 }: {
   title: string;
-  type: CardType;
+  content: string;
+  userEmail: string | undefined;
 }) {
-  const bgColorMap: Record<CardType, ComponentProps<"div">["className"]> = {
-    primary: "card-polka",
-    secondary: "card-diagonal2",
-    accent: "card-cross",
-    success: "card-zigzag",
-    error: "card-diagonal",
-    warning: "card-circles",
-  };
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const handleClick = () => {
+      const emailInput = document.getElementById(
+        "email-input",
+      ) as HTMLInputElement;
+      const whenInput = document.getElementById(
+        "when-input",
+      ) as HTMLInputElement;
+      const forInput = document.getElementById("for-input") as HTMLInputElement;
+
+      if (emailInput) {
+        emailInput.scrollIntoView({ behavior: "smooth" });
+        if (userEmail) {
+          emailInput.value = userEmail;
+          if (forInput) {
+            forInput.focus();
+          }
+        } else {
+          emailInput.focus();
+        }
+      }
+
+      if (whenInput) {
+        whenInput.value = content;
+      }
+    };
+
+    const button = buttonRef.current;
+    if (button) {
+      button.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      if (button) {
+        button.removeEventListener("click", handleClick);
+      }
+    };
+  }, [content, userEmail]);
 
   return (
-    <div
-      className={`card w-64 sm:w-72 h-[16rem] rounded-box ${bgColorMap[type]}`}
-    >
-      <div className="card-body">
-        <h2 className="card-title justify-center">{title}</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
+    <div className="card w-64 sm:w-72 h-56 bg-base-200 rounded-box">
+      <div className="card-body text-center">
+        <p>{title}</p>
+        <p className="text-xl font-semibold">Pyngme when {content}</p>
         <div className="card-actions">
-          <button type="button" className="btn w-full">
+          <button
+            ref={buttonRef}
+            type="button"
+            className="btn btn-outline w-full"
+          >
             Try Now
           </button>
         </div>
