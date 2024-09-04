@@ -1,12 +1,10 @@
-import { PageContentContainer } from "./components/common";
-import CreatePyng from "./components/create-pyng/create-pyng";
-import PopularPyngs from "./components/popular-pyngs/popular-pyngs";
+import { currentUser } from "@clerk/nextjs/server";
+import HomePageContent from "./page-content";
 
-export default async function Home() {
-  return (
-    <PageContentContainer>
-      <CreatePyng />
-      <PopularPyngs />
-    </PageContentContainer>
-  );
+export default async function HomePage() {
+  const user = await currentUser();
+  const userEmail = user?.primaryEmailAddress?.emailAddress;
+  const userId = user?.id;
+
+  return <HomePageContent userEmail={userEmail} userId={userId} />;
 }

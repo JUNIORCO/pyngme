@@ -2,10 +2,9 @@
 
 import { createPyng } from "@/actions/create-pyng";
 import Routes from "@/routes";
-import { EveryOption } from "@prisma/client";
 import { LoaderCircle } from "lucide-react";
 import Link from "next/link";
-import { type SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useFormContext } from "react-hook-form";
 import toast from "react-hot-toast";
 import EmailDropdown from "./email-dropdown";
 import EveryInput from "./every-input";
@@ -27,13 +26,9 @@ export default function CreatePyngForm({
     handleSubmit,
     formState: { isSubmitting },
     reset,
-  } = useForm<IFormInput>({
-    defaultValues: {
-      userId,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      every: EveryOption.Hour,
-    },
-  });
+    watch,
+  } = useFormContext<IFormInput>();
+  console.log(watch());
 
   const disabled = isSubmitting;
 
@@ -54,14 +49,24 @@ export default function CreatePyngForm({
       return;
     }
 
-    await createPyng(data);
+    const result = await createPyng(data);
+    if (!result.success || result.error) {
+      toast.error("Sorry, something went wrong. Please try again", {
+        duration: 3500,
+      });
+      return;
+    }
+
     reset(undefined, { keepDefaultValues: true });
     toast.success(
       <p>
-        Pyng created! See it <Link href={Routes.pyngs}>here</Link>
+        Pyng created! See it{" "}
+        <Link href={Routes.pyngs} className="link">
+          here
+        </Link>
       </p>,
       {
-        duration: 5000,
+        duration: 3500,
       },
     );
   };

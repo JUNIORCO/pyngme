@@ -1,11 +1,11 @@
-import { currentUser } from "@clerk/nextjs/server";
 import { Title } from "../common";
 import PopularPyngsCard from "./card";
 
-export default async function PopularPyngs() {
-  const user = await currentUser();
-  const userEmail = user?.primaryEmailAddress?.emailAddress;
-
+export default function PopularPyngs({
+  userEmail,
+}: {
+  userEmail: string | undefined;
+}) {
   return (
     <div className="flex flex-col gap-4">
       <Title>Popular Pyngs</Title>

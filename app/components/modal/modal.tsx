@@ -18,6 +18,11 @@ export default function Modal({ content, closeModal }: ModalProps) {
         </div>
         {content}
       </div>
+      <form method="dialog" className="modal-backdrop">
+        <button type="button" onClick={closeModal}>
+          close
+        </button>
+      </form>
     </dialog>
   );
 }

@@ -11,6 +11,7 @@ export default function PyngsTable({ pyngs }: PyngsTableProps) {
       <table className="table">
         <thead>
           <tr>
+            <th>Name</th>
             <th>Email</th>
             <th>When</th>
             <th>For</th>
@@ -20,6 +21,7 @@ export default function PyngsTable({ pyngs }: PyngsTableProps) {
         <tbody>
           {pyngs.map((pyng) => (
             <tr key={pyng.id} className="hover">
+              <td>{pyng.name}</td>
               <td>{pyng.email}</td>
               <td>{pyng.condition}</td>
               <td>

@@ -1,12 +1,15 @@
-import { currentUser } from "@clerk/nextjs/server";
+"use client";
+
 import { Title } from "../common";
 import CreatePyngForm from "./create-pyng-form";
 
-export default async function CreatePyng() {
-  const user = await currentUser();
-  const userEmail = user?.primaryEmailAddress?.emailAddress;
-  const userId = user?.id;
-
+export default function CreatePyng({
+  userEmail,
+  userId,
+}: {
+  userEmail: string | undefined;
+  userId: string | undefined;
+}) {
   return (
     <div className="flex flex-col gap-4">
       <Title>Create a Pyng</Title>

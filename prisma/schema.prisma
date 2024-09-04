@@ -21,6 +21,7 @@ model Pyng {
   id String @id @default(cuid())
 
   // properties
+  name String
   userId String @map("user_id")
   email String 
   every EveryOption
