@@ -1,6 +1,8 @@
 import { PageContentContainer, Title } from "@/components/common";
 import { EVERY_OPTIONS_MAP } from "@/components/create-pyng/every-options-map";
+import Routes from "@/routes";
 import { currentUser } from "@clerk/nextjs/server";
+import Link from "next/link";
 import prisma from "../../prisma/prisma";
 import PyngsSection from "./pyngs-section";
 import RunsSection from "./runs-section";
@@ -12,7 +14,12 @@ export default async function Pyngs() {
     return (
       <div className="mt-16 px-4 md:px-32 py-8 flex flex-col gap-4">
         <Title>Pyngs</Title>
-        <p>Sign in to create your first Pyng!</p>
+        <p>
+          <Link href={Routes.signUp} className="link">
+            Sign up
+          </Link>{" "}
+          to create your first Pyng!
+        </p>
       </div>
     );
   }

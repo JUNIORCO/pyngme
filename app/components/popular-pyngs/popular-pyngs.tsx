@@ -28,7 +28,7 @@ export default async function PopularPyngs() {
         <div className="carousel-item">
           <PopularPyngsCard
             title="Blog Posts"
-            content="a new blog post is published"
+            content="a blog post is published"
             userEmail={userEmail}
           />
         </div>
@@ -49,7 +49,7 @@ export default async function PopularPyngs() {
         <div className="carousel-item">
           <PopularPyngsCard
             title="Sale"
-            content="a new sale is announced"
+            content="a sale is announced"
             userEmail={userEmail}
           />
         </div>
