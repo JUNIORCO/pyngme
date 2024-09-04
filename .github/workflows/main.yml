@@ -24,9 +24,11 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      # this is so that vercel can build the project
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
+      # this is so that prisma/trigger.dev can read the .env file
       - name: Pull Vercel Environment To .env
         run: vercel env pull .env --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
