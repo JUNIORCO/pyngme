@@ -25,7 +25,7 @@ export default function ThemeSelectorClient({
   };
 
   return (
-    <div className="dropdown dropdown-end">
+    <div className="dropdown dropdown-bottom md:dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost rounded-btn">
         Theme <ChevronDown className="w-4 h-4" />
       </div>

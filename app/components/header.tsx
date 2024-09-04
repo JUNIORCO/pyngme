@@ -57,7 +57,7 @@ export default async function Header() {
           aria-label="close sidebar"
           className="drawer-overlay"
         />
-        <ul className="p-4 w-80 min-h-full bg-base-200">
+        <ul className="p-4 w-48 min-h-full bg-base-200 space-y-2">
           <li>
             <NavLink href={Routes.hub}>Hub</NavLink>
           </li>
