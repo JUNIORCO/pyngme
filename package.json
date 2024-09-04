@@ -11,7 +11,7 @@
     "trigger": "bunx trigger.dev@beta dev",
     "prisma:migrate": "prisma migrate dev --name dev",
     "prisma:migrate:deploy": "prisma migrate deploy",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate && prisma migrate deploy"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.3.7",
