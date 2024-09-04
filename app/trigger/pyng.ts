@@ -84,7 +84,7 @@ export const pyngTask = schedules.task({
     console.log("Condition met, sending email...");
     const resend = new Resend();
     const emailResponse = await resend.emails.send({
-      from: "Pyngme <sami.juniorco@gmail.com>",
+      from: "Pyngme <no-reply@trypyngme.com>",
       to: currentPyng.email,
       subject: "Your Pyng has been triggered!",
       html: `

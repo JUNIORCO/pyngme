@@ -44,6 +44,8 @@ export default function RootLayout({
           colorDanger: getErrorColor(theme),
           colorWarning: getWarningColor(theme),
           colorSuccess: getSuccessColor(theme),
+          colorInputBackground: getBackground(theme),
+          colorInputText: getTextColor(theme),
         },
       }}
     >

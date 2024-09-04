@@ -38,6 +38,22 @@ export default function CreatePyngForm({
   const disabled = isSubmitting;
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    if (!userId) {
+      toast.success(
+        <p>
+          <Link href={Routes.signUp} className="link">
+            Sign up
+          </Link>{" "}
+          to create this Pyng!
+        </p>,
+        {
+          icon: "🚀",
+          duration: 6000,
+        },
+      );
+      return;
+    }
+
     await createPyng(data);
     reset(undefined, { keepDefaultValues: true });
     toast.success(
