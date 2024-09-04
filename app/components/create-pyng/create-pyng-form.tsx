@@ -1,8 +1,10 @@
 "use client";
 
 import { createPyng } from "@/actions/create-pyng";
+import Routes from "@/routes";
 import { EveryOption } from "@prisma/client";
 import { LoaderCircle } from "lucide-react";
+import Link from "next/link";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import EmailDropdown from "./email-dropdown";
@@ -38,7 +40,14 @@ export default function CreatePyngForm({
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     await createPyng(data);
     reset(undefined, { keepDefaultValues: true });
-    toast.success("Pyng created! 🎉");
+    toast.success(
+      <p>
+        Pyng created! See it <Link href={Routes.pyngs}>here</Link>
+      </p>,
+      {
+        duration: 5000,
+      },
+    );
   };
 
   return (

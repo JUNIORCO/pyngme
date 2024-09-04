@@ -27,11 +27,37 @@ model Pyng {
   timezone String 
   url String
   condition String
+  triggerScheduleId String? @map("trigger_schedule_id")
+
+  // relationships
+  runs Run[]
 
   // dates
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-    // rename
+  // rename
   @@map("pyng")
+}
+
+model Run {
+  // id
+  id String @id @default(cuid())
+
+  // properites
+  scrape String
+  reasoning String
+  sentEmail Boolean @map("sent_email")
+  userId String @map("user_id")
+
+  // relationships
+  pyngId String @map("pyng_id")
+  pyng Pyng @relation(fields: [pyngId], references: [id])
+
+  // dates
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // rename
+  @@map("run")
 }

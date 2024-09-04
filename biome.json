@@ -11,6 +11,9 @@
         "useKeyWithClickEvents": "off",
         "useKeyWithMouseEvents": "off",
         "noNoninteractiveTabindex": "off"
+      },
+      "suspicious": {
+        "noRedeclare": "off"
       }
     }
   },

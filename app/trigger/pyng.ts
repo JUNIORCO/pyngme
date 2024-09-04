@@ -1,7 +1,11 @@
 import { schedules } from "@trigger.dev/sdk/v3";
+import OpenAI from "openai";
+import { zodResponseFormat } from "openai/helpers/zod";
 import { Resend } from "resend";
+import { z } from "zod";
 import prisma from "../../prisma/prisma";
-import { PyngEmailTemplate } from "./email-template";
+import { SYSTEM_PROMPT, USER_PROMPT } from "./prompts";
+import scrape from "./scrape";
 
 export const pyngTask = schedules.task({
   id: "pyng",
@@ -11,16 +15,67 @@ export const pyngTask = schedules.task({
       throw new Error("externalId (which is the pyngId) is required");
     }
 
-    const { email, url, condition } = await prisma.pyng.findUniqueOrThrow({
+    // current pyng
+    const currentPyng = await prisma.pyng.findUniqueOrThrow({
       where: {
         id: pyngId,
       },
     });
 
-    // check if condition is met
-    const conditionMet = false;
+    // previous run
+    const previousRun = await prisma.run.findFirstOrThrow({
+      where: {
+        pyngId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
 
-    if (!conditionMet) {
+    // scrape
+    const markdown = await scrape(currentPyng.url);
+
+    const openai = new OpenAI();
+    const ShouldSendEmailReasoning = z.object({
+      reasoning: z.string(),
+      shouldSendEmail: z.boolean(),
+    });
+    const completion = await openai.beta.chat.completions.parse({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: SYSTEM_PROMPT },
+        {
+          role: "user",
+          content: USER_PROMPT(
+            previousRun.scrape,
+            markdown,
+            currentPyng.condition,
+          ),
+        },
+      ],
+      response_format: zodResponseFormat(
+        ShouldSendEmailReasoning,
+        "should_send_email_reasoning",
+      ),
+    });
+    const message = completion.choices[0].message.parsed;
+
+    console.log("openai message: ", message);
+
+    // save to db
+    const run = await prisma.run.create({
+      data: {
+        scrape: markdown,
+        reasoning: message?.reasoning || "",
+        sentEmail: message?.shouldSendEmail || false,
+        pyngId,
+        userId: currentPyng.userId,
+      },
+    });
+
+    console.log("run: ", run);
+
+    if (!message?.shouldSendEmail) {
       console.log("Condition not met, done.");
       return;
     }
@@ -30,9 +85,17 @@ export const pyngTask = schedules.task({
     const resend = new Resend();
     const emailResponse = await resend.emails.send({
       from: "Pyngme <sami.juniorco@gmail.com>",
-      to: email,
+      to: currentPyng.email,
       subject: "Your Pyng has been triggered!",
-      react: PyngEmailTemplate({ url, condition }),
+      html: `
+        <div>
+    <h1>Hey!</h1>
+    <p>Your pyng has been triggered!</p>
+    <p>Url: ${currentPyng.url}</p>
+    <p>Condition: ${currentPyng.condition}</p>
+    <p>Thanks for using Pyngme.</p>
+  </div>
+      `,
     });
 
     console.log("emailResponse: ", emailResponse);

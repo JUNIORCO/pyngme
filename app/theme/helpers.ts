@@ -2,8 +2,6 @@ import parse from "color-parse";
 import type { Theme } from "daisyui";
 import DaisyThemes from "daisyui/src/theming/themes";
 
-console.log(DaisyThemes);
-
 export const isLightTheme = (theme: Theme): boolean => {
   return DaisyThemes[theme]["color-scheme"] === "light";
 };

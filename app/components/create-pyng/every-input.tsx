@@ -1,17 +1,11 @@
 import type { EveryOption } from "@prisma/client";
 import { TimerReset } from "lucide-react";
 import { type UseControllerProps, useController } from "react-hook-form";
+import { EVERY_OPTIONS_MAP } from "./every-options-map";
 import type { IFormInput } from "./types";
 
 export default function EveryInput(props: UseControllerProps<IFormInput>) {
   const { field } = useController(props);
-
-  const optionsMap: Record<EveryOption, string> = {
-    FifteenMinutes: "15 mins",
-    Hour: "hour",
-    FourHours: "4 hours",
-    Day: "day",
-  };
 
   return (
     <div className="relative">
@@ -22,7 +16,7 @@ export default function EveryInput(props: UseControllerProps<IFormInput>) {
           value={field.value}
           onChange={(e) => field.onChange(e.target.value)}
         >
-          {Object.entries(optionsMap).map(([option, label]) => (
+          {Object.entries(EVERY_OPTIONS_MAP).map(([option, label]) => (
             <option key={option} value={option}>
               {label}
             </option>
