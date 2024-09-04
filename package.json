@@ -10,7 +10,8 @@
     "format": "bunx biome format --write app/",
     "trigger": "bunx trigger.dev@beta dev",
     "prisma:migrate": "prisma migrate dev --name dev",
-    "prisma:migrate:deploy": "prisma migrate deploy"
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.3.7",
