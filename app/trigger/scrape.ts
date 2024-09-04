@@ -15,7 +15,7 @@ const scrape = async (url: string): Promise<string> => {
   const res = await fetch("https://api.firecrawl.dev/v1/scrape", options);
   const scrapeResponse = await res.json();
 
-  console.log("scrapeResponse: ", scrapeResponse);
+  console.log("scrapeResponse : ", scrapeResponse);
 
   if (!scrapeResponse.success || !scrapeResponse.data.markdown) {
     throw new Error(scrapeResponse.error || "No markdown content found");
