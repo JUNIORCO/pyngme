@@ -19,14 +19,14 @@ export default function PopularPyngsCard({
     primary: "card-polka",
     secondary: "card-diagonal2",
     accent: "card-cross",
-    success: "card-diagonal",
-    error: "card-zigzag",
+    success: "card-zigzag",
+    error: "card-diagonal",
     warning: "card-circles",
   };
 
   return (
     <div
-      className={`card w-64 sm:w-72 h-[22rem] rounded-box ${bgColorMap[type]}`}
+      className={`card w-64 sm:w-72 h-[16rem] rounded-box ${bgColorMap[type]}`}
     >
       <div className="card-body">
         <h2 className="card-title justify-center">{title}</h2>

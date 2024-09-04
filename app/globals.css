@@ -32,7 +32,7 @@
 
 .card-polka {
   color: theme("textColor.primary-content");
-  background-image: radial-gradient(theme("colors.primary-content") 0.85px, theme("colors.primary") 0.85px);
+  background-image: radial-gradient(theme("colors.primary-content") 0.75px, theme("colors.primary") 0.75px);
   background-size: 12px 12px;
   text-shadow: 1px 1px 2px theme("colors.primary"), -1px -1px 2px theme("colors.primary"), 1px -1px 2px theme("colors.primary"), -1px 1px 2px theme("colors.primary");
   font-weight: bold;
@@ -47,28 +47,33 @@
 }
 
 .card-diagonal2 {
-  background: repeating-linear-gradient( -45deg, theme("colors.accent-content"), theme("colors.accent-content") 5px, theme("colors.accent") 5px, theme("colors.accent") 25px );
-  color: theme("textColor.accent-content");
+  background: repeating-linear-gradient( -45deg, theme("colors.accent-content"), theme("colors.accent-content") 2px, theme("colors.accent") 2px, theme("colors.accent") 64px );
+  color: theme("textColor.neutral");
   text-shadow: 1px 1px 2px theme("colors.accent"), -1px -1px 2px theme("colors.accent"), 1px -1px 2px theme("colors.accent"), -1px 1px 2px theme("colors.accent");
   font-weight: bold;
 }
 
 .card-diagonal {
-  background: repeating-linear-gradient( 45deg, theme("colors.accent-content"), theme("colors.accent-content") 5px, theme("colors.accent") 5px, theme("colors.accent") 25px );
-  color: theme("textColor.accent-content");
+  background: repeating-linear-gradient( 45deg, theme("colors.accent-content"), theme("colors.accent-content") 2px, theme("colors.accent") 2px, theme("colors.accent") 64px );
+  color: theme("textColor.neutral");
   text-shadow: 1px 1px 2px theme("colors.accent"), -1px -1px 2px theme("colors.accent"), 1px -1px 2px theme("colors.accent"), -1px 1px 2px theme("colors.accent");
   font-weight: bold;
 }
 
 .card-zigzag {
-  background-image:  linear-gradient(135deg, theme("backgroundColor.error") 25%, transparent 25%), linear-gradient(225deg, theme("backgroundColor.error") 25%, transparent 25%), linear-gradient(45deg, theme("backgroundColor.error") 25%, transparent 25%), linear-gradient(315deg, theme("backgroundColor.error") 25%, theme("textColor.error-content") 25%);
+  background-image: 
+    linear-gradient(135deg, theme("backgroundColor.error") 25%, transparent 25%), 
+    linear-gradient(225deg, theme("backgroundColor.error") 25%, transparent 25%), 
+    linear-gradient(45deg, theme("backgroundColor.error") 25%, transparent 25%), 
+    linear-gradient(315deg, theme("backgroundColor.error") 25%, theme("colors.neutral") 25%);
   background-position:  30px 0, 30px 0, 0 0, 0 0;
   background-size: 64px 64px;
   background-repeat: repeat;
-  color: theme("colors.neutral-content");
   text-shadow: 1px 1px 2px theme("colors.neutral"), -1px -1px 2px theme("colors.neutral"), 1px -1px 2px theme("colors.neutral"), -1px 1px 2px theme("colors.neutral");
+  color: theme("colors.neutral-content");
   font-weight: bold;
 }
+
 
 .card-circles {
   background-size: 44px 44px;
