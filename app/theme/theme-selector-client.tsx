@@ -29,7 +29,10 @@ export default function ThemeSelectorClient({
       <div tabIndex={0} role="button" className="btn btn-ghost rounded-btn">
         Theme <ChevronDown className="w-4 h-4" />
       </div>
-      <ul className="menu dropdown-content bg-base-200 rounded-box z-[1] mt-4 w-52 p-2 shadow max-h-[36rem] overflow-y-scroll block space-y-2">
+      <ul
+        tabIndex={0}
+        className="menu dropdown-content bg-base-200 rounded-box z-[1] mt-4 w-52 p-2 shadow max-h-[36rem] overflow-y-scroll block space-y-2"
+      >
         <li key="random">
           <button
             type="button"

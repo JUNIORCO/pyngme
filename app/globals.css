@@ -9,3 +9,8 @@
 .cl-userButtonPopoverFooter {
   display: none;
 }
+
+/* set the z-index to 1 because when opening a drawer, it should be behind the drawer */
+.cl-card {
+  z-index: 1;
+}
