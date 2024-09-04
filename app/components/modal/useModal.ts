@@ -9,7 +9,7 @@ export function useModal() {
   const openModal = useCallback((modalContent: ReactNode) => {
     setContent(modalContent);
     setIsOpen(true);
-    const modal = document.getElementById("dynamic_modal") as as HTMLDialogElement;
+    const modal = document.getElementById("dynamic_modal") as HTMLDialogElement;
     if (modal) {
       modal.showModal();
     }
@@ -18,7 +18,7 @@ export function useModal() {
   const closeModal = useCallback(() => {
     setIsOpen(false);
     setContent(null);
-    const modal = document.getElementById("dynamic_modal") as as HTMLDialogElement;
+    const modal = document.getElementById("dynamic_modal") as HTMLDialogElement;
     if (modal) {
       modal.close();
     }
