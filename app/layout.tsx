@@ -32,9 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookieStore = cookies();
-  const theme =
-    (cookieStore.get(THEME_COOKIE_NAME)?.value as Theme) ||
-    THEMES[Math.floor(Math.random() * THEMES.length)];
+  const theme = (cookieStore.get(THEME_COOKIE_NAME)?.value || "light") as Theme;
 
   return (
     <ClerkProvider

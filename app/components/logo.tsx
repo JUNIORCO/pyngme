@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function Logo() {
   const cookieStore = cookies();
-  const theme = cookieStore.get(THEME_COOKIE_NAME)?.value as Theme;
+  const theme = (cookieStore.get(THEME_COOKIE_NAME)?.value || "light") as Theme;
 
   return (
     <Image
