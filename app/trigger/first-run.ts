@@ -1,6 +1,5 @@
 import { schedules, task } from "@trigger.dev/sdk/v3";
 import prisma from "../../prisma/prisma";
-import { pyngTask } from "./pyng";
 import scrape from "./scrape";
 
 export const firstRun = task({

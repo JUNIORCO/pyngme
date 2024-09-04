@@ -14,4 +14,11 @@ export const config: TriggerConfig = {
     },
   },
   triggerDirectories: ["app/trigger"],
+  additionalFiles: ["./prisma/schema.prisma"],
+  additionalPackages: [
+    "prisma@5.19.1",
+    "openai@4.57.1",
+    "resend@4.0.0",
+    "zod@3.23.8",
+  ],
 };
