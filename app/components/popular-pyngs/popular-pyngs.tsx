@@ -6,7 +6,7 @@ export default function PopularPyngs() {
     <div className="flex flex-col gap-4">
       <Title>Popular Pyngs</Title>
 
-      <div className="carousel rounded-box space-x-4">
+      <div className="carousel carousel-center rounded-box space-x-4">
         <div className="carousel-item">
           <PopularPyngsCard title="Price Drops" type="primary" />
         </div>
