@@ -52,7 +52,7 @@ export default function CreatePyngForm({
     const result = await createPyng(data);
     if (!result.success || result.error) {
       toast.error("Sorry, something went wrong. Please try again", {
-        duration: 3500,
+        duration: 3000,
       });
       return;
     }
@@ -66,7 +66,7 @@ export default function CreatePyngForm({
         </Link>
       </p>,
       {
-        duration: 3500,
+        duration: 3000,
       },
     );
   };
@@ -84,7 +84,7 @@ export default function CreatePyngForm({
           rules={{
             required: true,
             pattern: {
-              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              value: /\S+@\S+\.\S+/,
               message: "Invalid email address",
             },
           }}
@@ -106,7 +106,7 @@ export default function CreatePyngForm({
             required: true,
             pattern: {
               value:
-                /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/,
+                /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
               message: "Invalid URL format",
             },
           }}
