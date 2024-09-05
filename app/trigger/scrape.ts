@@ -43,7 +43,10 @@ const scrape = async (url: string): Promise<string> => {
 
   console.log("length of text: ", text.length);
   console.log("Text: ", text.slice(0, 1000));
-  return text;
+
+  const cap = 10000;
+  const cappedText = text.slice(0, cap);
+  return cappedText;
 };
 
 export default scrape;
