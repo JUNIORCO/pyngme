@@ -21,6 +21,8 @@
     "@vercel/speed-insights": "^1.0.12",
     "color-parse": "^2.0.2",
     "framer-motion": "^11.3.31",
+    "jquery": "^3.7.1",
+    "jsdom": "^25.0.0",
     "lucide-react": "^0.438.0",
     "next": "14.2.7",
     "openai": "^4.57.1",
@@ -35,6 +37,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
+    "@types/jquery": "^3.5.30",
+    "@types/jsdom": "^21.1.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

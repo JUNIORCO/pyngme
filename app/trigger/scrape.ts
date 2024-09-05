@@ -1,4 +1,6 @@
-const scrape = async (url: string): Promise<string> => {
+import { htmlToText } from "./html-to-text";
+
+const firecrawlScrape = async (url: string): Promise<string> => {
   const options = {
     method: "POST",
     headers: {
@@ -22,6 +24,26 @@ const scrape = async (url: string): Promise<string> => {
   }
 
   return scrapeResponse.data.markdown;
+};
+
+const scrape = async (url: string): Promise<string> => {
+  try {
+    return await firecrawlScrape(url);
+  } catch (error) {
+    console.error("Error scraping url with firecrawl: ", url, error);
+  }
+
+  console.log("Scraping url with fetch...");
+  const res = await fetch(url);
+  const html = await res.text();
+  console.log("length of html: ", html.length);
+  console.log("html: ", html.slice(0, 1000));
+
+  const text = htmlToText(html);
+
+  console.log("length of text: ", text.length);
+  console.log("Text: ", text.slice(0, 1000));
+  return text;
 };
 
 export default scrape;

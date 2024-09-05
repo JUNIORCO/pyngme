@@ -1,17 +1,17 @@
 {
-	"cursor.cpp.disabledLanguages": ["markdown"],
-	"files.autoSave": "onFocusChange",
-	"files.autoSaveDelay": 100,
-	"editor.codeActionsOnSave": {
-		"source.organizeImports.biome": "explicit"
-	},
-	"editor.formatOnSave": true,
-	"editor.defaultFormatter": "biomejs.biome",
-	"editor.linkedEditing": true,
-	"explorer.confirmDragAndDrop": false,
-	"typescript.updateImportsOnFileMove.enabled": "always",
-	"workbench.tree.indent": 16,
-	"editor.tabSize": 2,
-	"terminal.integrated.tabs.enabled": true,
-	"terminal.integrated.tabs.hideCondition": "never"
+  "cursor.cpp.disabledLanguages": ["markdown"],
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 100,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.linkedEditing": true,
+  "explorer.confirmDragAndDrop": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "workbench.tree.indent": 16,
+  "editor.tabSize": 2,
+  "terminal.integrated.tabs.enabled": true,
+  "terminal.integrated.tabs.hideCondition": "never"
 }

@@ -26,9 +26,7 @@ export default function CreatePyngForm({
     handleSubmit,
     formState: { isSubmitting },
     reset,
-    watch,
   } = useFormContext<IFormInput>();
-  console.log(watch());
 
   const disabled = isSubmitting;
 
@@ -104,6 +102,38 @@ export default function CreatePyngForm({
           isDisabled={disabled}
           rules={{
             required: true,
+            validate: (value) => {
+              const socialMediaBlocklist = [
+                "facebook.com",
+                "x.com",
+                "twitter.com",
+                "instagram.com",
+                "linkedin.com",
+                "snapchat.com",
+                "tiktok.com",
+                "reddit.com",
+                "tumblr.com",
+                "flickr.com",
+                "whatsapp.com",
+                "wechat.com",
+                "telegram.org",
+                "researchhub.com",
+                "youtube.com",
+                "corterix.com",
+                "southwest.com",
+                "ryanair.com",
+              ];
+
+              const lowerCaseValue = value.toLowerCase();
+
+              for (const blocklistItem of socialMediaBlocklist) {
+                if (lowerCaseValue.includes(blocklistItem)) {
+                  return "We can't use this URL for policy reasons.";
+                }
+              }
+
+              return true;
+            },
             pattern: {
               value:
                 /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
