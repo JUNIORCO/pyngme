@@ -48,7 +48,7 @@ export default async function PricingPage() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <Title>Estimate</Title>
+        <Title>Estimate Your Usage</Title>
 
         <div className="grid grid-cols-3 gap-4">
           <div className="card bg-base-100 shadow-md">
@@ -64,8 +64,9 @@ export default async function PricingPage() {
 
           <div className="card bg-base-100 shadow-md">
             <div className="card-body">
-              <p className="font-bold">Mid Usage</p>
-              <p>10 Pyngs, 5 run every hour, 5 run every 15 mins</p>
+              <p className="font-bold">Medium Usage</p>
+              <p>10 Pyngs</p>
+              <p>5 run every hour, 5 run every 15 mins</p>
               <h2 className="card-title" style={{ gap: "0px" }}>
                 $90 per month
                 <HelperBtn content="(5 Pyngs &times; 24 times a day &times; 30 days &times; 0.005 / run) + (5 Pyngs &times; 96 times a day &times; 30 days &times; 0.005 / run) = $90 / mo" />
