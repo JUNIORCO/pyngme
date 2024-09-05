@@ -1,7 +1,9 @@
 name: Production Deployment
 env:
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  TRIGGER_API_KEY: ${{ secrets.TRIGGER_API_KEY }}
 
 on:
   push:
@@ -13,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
@@ -41,13 +43,16 @@ jobs:
       - name: Prisma Migrate Deploy
         run: npx prisma migrate deploy
 
-      - name: Check for changes in trigger folder
-        id: check_trigger_changes
-        run: |
-          git diff --quiet ${{ github.event.before }} ${{ github.sha }} -- app/trigger/ || echo "changes=true" >> $GITHUB_OUTPUT
+      - name: Check for changes in app/trigger
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            trigger:
+              - 'app/trigger/**'
 
       - name: Trigger Deploy
-        if: steps.check_trigger_changes.outputs.changes == 'true'
+        if: steps.filter.outputs.trigger == 'true'
         run: npx trigger.dev@beta deploy
 
       - name: Deploy Project Artifacts to Vercel
