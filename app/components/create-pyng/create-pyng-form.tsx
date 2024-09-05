@@ -128,7 +128,7 @@ export default function CreatePyngForm({
 
               for (const blocklistItem of socialMediaBlocklist) {
                 if (lowerCaseValue.includes(blocklistItem)) {
-                  return "We can't use this URL for policy reasons.";
+                  return "We can't use this URL for policy reasons";
                 }
               }
 
