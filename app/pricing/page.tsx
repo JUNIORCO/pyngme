@@ -36,7 +36,7 @@ export default async function PricingPage() {
   return (
     <PageContentContainer>
       <div className="flex flex-col gap-4 justify-center items-center">
-        <p className="text-xl font-semibold">The Best Pricing On The Market</p>
+        <p className="text-xl font-semibold">Simple, Easy, Flexible</p>
         <p className="text-4xl font-bold my-6">$0.005 per run</p>
         {!user ? (
           <Link href={Routes.signUp}>
