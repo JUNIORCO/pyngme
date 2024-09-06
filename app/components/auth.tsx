@@ -2,16 +2,13 @@
 
 import Routes from "@/routes";
 import { useClerk, useUser } from "@clerk/nextjs";
-import type { UserResource } from "@clerk/types";
 import Link from "next/link";
 import { useState } from "react";
 import { LoaderIcon } from "react-hot-toast";
 
-const UserProfile = ({ user }: { user: UserResource }) => {
+const UserProfile = () => {
   const [loading, setLoading] = useState(false);
   const clerk = useClerk();
-
-  const showProfile = user?.imageUrl;
 
   const handleSignOut = () => {
     setLoading(true);
@@ -49,7 +46,7 @@ const AuthLoaded = () => {
   const { user } = useUser();
 
   return user ? (
-    <UserProfile user={user} />
+    <UserProfile />
   ) : (
     <Link href={Routes.signUp}>
       <button type="button" className="btn btn-outline">
