@@ -13,6 +13,9 @@ export default function HomePage() {
   const stripeCustomerId = user?.publicMetadata.stripeCustomerId as
     | string
     | undefined;
+  const stripeSetupSucceeded = user?.publicMetadata.stripeSetupSucceeded as
+    | boolean
+    | undefined;
 
   return (
     <HomePageContent
@@ -20,6 +23,7 @@ export default function HomePage() {
       clerkUserId={clerkUserId}
       stripeSubscriptionId={stripeSubscriptionId}
       stripeCustomerId={stripeCustomerId}
+      stripeSetupSucceeded={stripeSetupSucceeded}
     />
   );
 }

@@ -13,6 +13,7 @@ type HomePageContentProps = {
   clerkUserId: string | undefined;
   stripeSubscriptionId: string | undefined;
   stripeCustomerId: string | undefined;
+  stripeSetupSucceeded: boolean | undefined;
 };
 
 export default function HomePageContent({
@@ -20,6 +21,7 @@ export default function HomePageContent({
   clerkUserId,
   stripeSubscriptionId,
   stripeCustomerId,
+  stripeSetupSucceeded,
 }: HomePageContentProps) {
   const methods = useForm<IFormInput>({
     defaultValues: {
@@ -45,6 +47,7 @@ export default function HomePageContent({
           userEmail={userEmail}
           clerkUserId={clerkUserId}
           stripeSubscriptionId={stripeSubscriptionId}
+          stripeSetupSucceeded={stripeSetupSucceeded}
         />
         <PopularPyngs userEmail={userEmail} />
       </FormProvider>

@@ -7,10 +7,12 @@ export default function CreatePyng({
   userEmail,
   clerkUserId,
   stripeSubscriptionId,
+  stripeSetupSucceeded,
 }: {
   userEmail: string | undefined;
   clerkUserId: string | undefined;
   stripeSubscriptionId: string | undefined;
+  stripeSetupSucceeded: boolean | undefined;
 }) {
   return (
     <div className="flex flex-col gap-4">
@@ -19,6 +21,7 @@ export default function CreatePyng({
         userEmail={userEmail}
         clerkUserId={clerkUserId}
         stripeSubscriptionId={stripeSubscriptionId}
+        stripeSetupSucceeded={stripeSetupSucceeded}
       />
     </div>
   );
