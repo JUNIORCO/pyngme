@@ -33,7 +33,6 @@ export default function CreatePyngForm({
   const disabled = isSubmitting;
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    console.log("clerkUserId inside", data);
     if (!clerkUserId) {
       toast.success(
         <p>
@@ -56,6 +55,11 @@ export default function CreatePyngForm({
       });
       return;
     }
+
+    toast.success("Hold on, this could take 10 seconds.", {
+      icon: "⏳",
+      duration: 3500,
+    });
 
     const result = await createPyng(data);
     if (!result.success || result.error) {
@@ -113,6 +117,10 @@ export default function CreatePyngForm({
           rules={{
             required: true,
             validate: (value) => {
+              if (!value) {
+                return "Required";
+              }
+
               const socialMediaBlocklist = [
                 "facebook.com",
                 "x.com",

@@ -21,15 +21,18 @@ export default function Usage({
     return null;
   }
 
+  const [loading, setLoading] = useState(true);
   const [totalUsage, setTotalUsage] = useState(0);
 
   useEffect(() => {
     const getUsage = async () => {
+      setLoading(true);
       const totalUsage = await fetchUsage(
         stripeCustomerId,
         stripeSubscriptionId,
       );
       setTotalUsage(totalUsage);
+      setLoading(false);
     };
 
     getUsage();
@@ -38,10 +41,16 @@ export default function Usage({
   return (
     <button
       type="button"
-      className="btn btn-ghost no-animation pointer-events-none select-text"
+      className="btn btn-ghost no-animation pointer-events-none"
     >
       Usage
-      <div className="badge">{totalUsage} runs</div>
+      <div className="badge badge-secondary">
+        {loading ? (
+          <span className="loading loading-dots loading-xs" />
+        ) : (
+          `${totalUsage.toLocaleString()} runs`
+        )}
+      </div>
     </button>
   );
 }

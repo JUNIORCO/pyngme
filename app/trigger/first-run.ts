@@ -22,12 +22,16 @@ export const firstRun = task({
       },
     });
 
-    await stripe.billing.meterEvents.create({
+    console.log("Creating billing meter event...");
+
+    const meterEvent = await stripe.billing.meterEvents.create({
       event_name: "pyng_run",
       payload: {
         stripe_customer_id: output.stripeCustomerId,
       },
     });
+
+    console.log("Billing meter event created", meterEvent);
   },
   run: async (payload: {
     pyngId: string;

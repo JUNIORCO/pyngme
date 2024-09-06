@@ -52,7 +52,9 @@ export default function Header({ src, initialTheme }: HeaderProps) {
             <div className="hidden lg:block">
               <ThemeSelector initialTheme={initialTheme} />
             </div>
-            <Auth />
+            <div className="hidden lg:block">
+              <Auth />
+            </div>
           </div>
           <div className="flex-none ml-2 lg:hidden">
             <label
@@ -83,6 +85,9 @@ export default function Header({ src, initialTheme }: HeaderProps) {
           </li>
           <li className="lg:hidden mt-4">
             <ThemeSelector initialTheme={initialTheme} />
+          </li>
+          <li className="lg:hidden mt-8 ml-4">
+            <Auth />
           </li>
         </ul>
       </div>

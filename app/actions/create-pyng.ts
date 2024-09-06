@@ -81,7 +81,7 @@ For example, a user can set up "email <> when <a new blog post is release> for <
 
     console.log("runId: ", runId);
 
-    const maxAttempts = 10;
+    const maxAttempts = 30;
     const pollInterval = 1000;
 
     for (let attempt = 0; attempt < maxAttempts; attempt++) {

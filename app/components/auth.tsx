@@ -21,7 +21,7 @@ const UserProfile = ({ user }: { user: UserResource }) => {
   };
 
   return (
-    <div className="dropdown dropdown-bottom dropdown-end">
+    <div className="dropdown dropdown-bottom dropdown-start md:dropdown-end">
       <div tabIndex={0} role="button" className="avatar">
         <div className="w-10 rounded-full">
           <img src={clerk.user?.imageUrl} alt="User avatar" />

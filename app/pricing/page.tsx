@@ -155,10 +155,27 @@ export default async function PricingPage() {
           <div className="collapse collapse-arrow bg-base-200 shadow-md">
             <input type="radio" name="my-accordion-2" />
             <div className="collapse-title text-xl font-medium">
-              Is there a free tier?
+              Can I have multiple Pyngs with different schedules?
             </div>
             <div className="collapse-content">
-              <p>Not at this time.</p>
+              <p>
+                Yes, each Pyng has its own schedule. For example, in the medium
+                usage estimate, we have 5 Pyngs that run every hour and 5 Pyngs
+                that run every 15 minutes.
+              </p>
+            </div>
+          </div>
+
+          <div className="collapse collapse-arrow bg-base-200 shadow-md">
+            <input type="radio" name="my-accordion-2" />
+            <div className="collapse-title text-xl font-medium">
+              Is there an always-free tier?
+            </div>
+            <div className="collapse-content">
+              <p>
+                No. There are 100 free runs per month. After that, you will be
+                billed for each run.
+              </p>
             </div>
           </div>
 
@@ -168,10 +185,7 @@ export default async function PricingPage() {
               What is the billing cycle?
             </div>
             <div className="collapse-content">
-              <p>
-                Billing is done on a monthly basis. You will be billed at the
-                start of each month.
-              </p>
+              <p>Billing is done on a monthly basis.</p>
             </div>
           </div>
         </div>

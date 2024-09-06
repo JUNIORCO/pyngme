@@ -46,7 +46,7 @@ export default function PopularPyngsCard({
         <div className="card-actions">
           <button
             type="button"
-            className="btn btn-outline w-full"
+            className="btn btn-neutral w-full"
             onClick={handleClick}
           >
             Try Now

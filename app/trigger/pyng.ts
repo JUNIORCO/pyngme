@@ -8,22 +8,29 @@ import { SYSTEM_PROMPT, USER_PROMPT } from "./prompts";
 import scrape from "./scrape";
 import stripe from "./stripe";
 
-type PyngTaskOutput = {
-  stripeCustomerId: string;
-};
-
 export const pyngTask = schedules.task({
   id: "pyng",
-  onSuccess: async (payload, output) => {
-    console.log("pyngTask onSuccess payload: ", payload);
-    console.log("pyngTask onSuccess output: ", output);
-    const { stripeCustomerId } = output as PyngTaskOutput;
-    await stripe.billing.meterEvents.create({
-      event_name: "pyng_run",
-      payload: {
-        stripe_customer_id: stripeCustomerId,
+  onSuccess: async (payload) => {
+    const pyngId = payload.externalId;
+    if (!pyngId) {
+      throw new Error("externalId (which is the pyngId) is required");
+    }
+
+    // current pyng
+    const currentPyng = await prisma.pyng.findUniqueOrThrow({
+      where: {
+        id: pyngId,
       },
     });
+
+    console.log("Creating billing meter event...");
+    const meterEvent = await stripe.billing.meterEvents.create({
+      event_name: "pyng_run",
+      payload: {
+        stripe_customer_id: currentPyng.stripeCustomerId,
+      },
+    });
+    console.log("Billing meter event created", meterEvent);
   },
   run: async (payload) => {
     const pyngId = payload.externalId;
@@ -119,9 +126,5 @@ export const pyngTask = schedules.task({
     if (emailResponse.error) {
       throw new Error(emailResponse.error.message);
     }
-
-    return {
-      stripeCustomerId: currentPyng.stripeCustomerId,
-    } as PyngTaskOutput;
   },
 });
