@@ -4,6 +4,7 @@ const Routes = {
   signUp: "/sign-up",
   pyngs: "/pyngs",
   pricing: "/pricing",
+  welcome: "/welcome",
 };
 
 export default Routes;

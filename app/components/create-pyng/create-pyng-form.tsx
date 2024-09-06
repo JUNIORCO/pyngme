@@ -14,12 +14,14 @@ import WhenInput from "./when-input";
 
 type CreatePyngFormProps = {
   userEmail: string | undefined;
-  userId: string | undefined;
+  clerkUserId: string | undefined;
+  stripeSubscriptionId: string | undefined;
 };
 
 export default function CreatePyngForm({
   userEmail,
-  userId,
+  clerkUserId,
+  stripeSubscriptionId,
 }: CreatePyngFormProps) {
   const {
     control,
@@ -31,7 +33,8 @@ export default function CreatePyngForm({
   const disabled = isSubmitting;
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    if (!userId) {
+    console.log("clerkUserId inside", data);
+    if (!clerkUserId) {
       toast.success(
         <p>
           <Link href={Routes.signUp} className="link">
@@ -41,16 +44,23 @@ export default function CreatePyngForm({
         </p>,
         {
           icon: "🚀",
-          duration: 6000,
+          duration: 3500,
         },
       );
+      return;
+    }
+
+    if (!stripeSubscriptionId) {
+      toast.error("Please set up billing to create Pyngs.", {
+        duration: 3500,
+      });
       return;
     }
 
     const result = await createPyng(data);
     if (!result.success || result.error) {
       toast.error("Sorry, something went wrong. Please try again", {
-        duration: 3000,
+        duration: 3500,
       });
       return;
     }
@@ -64,7 +74,7 @@ export default function CreatePyngForm({
         </Link>
       </p>,
       {
-        duration: 3000,
+        duration: 3500,
       },
     );
   };

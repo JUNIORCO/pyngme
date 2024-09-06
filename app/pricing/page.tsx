@@ -56,7 +56,8 @@ export default async function PricingPage() {
           <div className="card bg-base-100 shadow-md">
             <div className="card-body">
               <p className="font-bold">Low Usage</p>
-              <p>2 Pyngs, each runs every 4 hours</p>
+              <p>2 Pyngs</p>
+              <p>Each runs every 4 hours</p>
               <h2 className="card-title" style={{ gap: "0px" }}>
                 $1.75 per month
                 <HelperBtn
@@ -99,9 +100,10 @@ export default async function PricingPage() {
           <div className="card bg-base-100 shadow-md">
             <div className="card-body">
               <p className="font-bold">High Usage</p>
-              <p>25 Pyngs, each runs every 15 mins</p>
+              <p>25 Pyngs</p>
+              <p>Each runs every 15 mins</p>
               <h2 className="card-title" style={{ gap: "0px" }}>
-                $359.5 / month
+                $359.5 per month
                 <HelperBtn
                   content={
                     <p>

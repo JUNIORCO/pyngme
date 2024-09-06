@@ -22,8 +22,9 @@ model Pyng {
   id String @id @default(cuid())
 
   // properties
+  stripeCustomerId String @map("stripe_customer_id")
+  clerkUserId String @map("clerk_user_id")
   name String
-  userId String @map("user_id")
   email String 
   every EveryOption
   timezone String 
@@ -50,7 +51,7 @@ model Run {
   scrape String
   reasoning String
   sentEmail Boolean @map("sent_email")
-  userId String @map("user_id")
+  clerkUserId String @map("clerk_user_id")
 
   // relationships
   pyngId String @map("pyng_id")

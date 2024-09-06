@@ -6,9 +6,25 @@ import { z } from "zod";
 import prisma from "../../prisma/prisma";
 import { SYSTEM_PROMPT, USER_PROMPT } from "./prompts";
 import scrape from "./scrape";
+import stripe from "./stripe";
+
+type PyngTaskOutput = {
+  stripeCustomerId: string;
+};
 
 export const pyngTask = schedules.task({
   id: "pyng",
+  onSuccess: async (payload, output) => {
+    console.log("pyngTask onSuccess payload: ", payload);
+    console.log("pyngTask onSuccess output: ", output);
+    const { stripeCustomerId } = output as PyngTaskOutput;
+    await stripe.billing.meterEvents.create({
+      event_name: "pyng_run",
+      payload: {
+        stripe_customer_id: stripeCustomerId,
+      },
+    });
+  },
   run: async (payload) => {
     const pyngId = payload.externalId;
     if (!pyngId) {
@@ -69,7 +85,7 @@ export const pyngTask = schedules.task({
         reasoning: message?.reasoning || "",
         sentEmail: message?.shouldSendEmail || false,
         pyngId,
-        userId: currentPyng.userId,
+        clerkUserId: currentPyng.clerkUserId,
       },
     });
 
@@ -103,5 +119,9 @@ export const pyngTask = schedules.task({
     if (emailResponse.error) {
       throw new Error(emailResponse.error.message);
     }
+
+    return {
+      stripeCustomerId: currentPyng.stripeCustomerId,
+    } as PyngTaskOutput;
   },
 });

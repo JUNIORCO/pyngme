@@ -25,7 +25,7 @@ export default async function Pyngs() {
 
   const pyngsPromise = prisma.pyng.findMany({
     where: {
-      userId: user.id,
+      clerkUserId: user.id,
     },
     orderBy: {
       createdAt: "desc",
@@ -35,7 +35,7 @@ export default async function Pyngs() {
 
   const runsPromise = prisma.run.findMany({
     where: {
-      userId: user.id,
+      clerkUserId: user.id,
     },
     orderBy: {
       createdAt: "desc",

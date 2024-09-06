@@ -20,5 +20,6 @@ export const config: TriggerConfig = {
     "openai@4.57.1",
     "resend@4.0.0",
     "zod@3.23.8",
+    "stripe@16.10.0",
   ],
 };

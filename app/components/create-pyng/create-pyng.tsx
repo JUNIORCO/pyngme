@@ -5,15 +5,21 @@ import CreatePyngForm from "./create-pyng-form";
 
 export default function CreatePyng({
   userEmail,
-  userId,
+  clerkUserId,
+  stripeSubscriptionId,
 }: {
   userEmail: string | undefined;
-  userId: string | undefined;
+  clerkUserId: string | undefined;
+  stripeSubscriptionId: string | undefined;
 }) {
   return (
     <div className="flex flex-col gap-4">
       <Title>Create a Pyng</Title>
-      <CreatePyngForm userEmail={userEmail} userId={userId} />
+      <CreatePyngForm
+        userEmail={userEmail}
+        clerkUserId={clerkUserId}
+        stripeSubscriptionId={stripeSubscriptionId}
+      />
     </div>
   );
 }

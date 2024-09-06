@@ -1,6 +1,7 @@
 import { schedules, task } from "@trigger.dev/sdk/v3";
 import prisma from "../../prisma/prisma";
 import scrape from "./scrape";
+import stripe from "./stripe";
 
 export const firstRun = task({
   id: "first-run",
@@ -18,6 +19,13 @@ export const firstRun = task({
       },
       data: {
         triggerScheduleId: schedule.id,
+      },
+    });
+
+    await stripe.billing.meterEvents.create({
+      event_name: "pyng_run",
+      payload: {
+        stripe_customer_id: output.stripeCustomerId,
       },
     });
   },
@@ -49,10 +57,10 @@ export const firstRun = task({
         scrape: markdown,
         reasoning: "First run.",
         sentEmail: false,
-        userId: currentPyng.userId,
+        clerkUserId: currentPyng.clerkUserId,
       },
     });
 
-    return { schedulePayload };
+    return { schedulePayload, stripeCustomerId: currentPyng.stripeCustomerId };
   },
 });

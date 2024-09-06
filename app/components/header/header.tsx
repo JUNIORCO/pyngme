@@ -1,14 +1,27 @@
+"use client";
+
 import Routes from "@/routes";
 import ThemeSelector from "@/theme/theme-selector";
-import { currentUser } from "@clerk/nextjs/server";
+import type { Theme } from "daisyui";
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
-import Auth from "./auth";
-import Logo from "./logo";
-import NavLink from "./navlink";
+import { usePathname } from "next/navigation";
+import Auth from "../auth";
+import Logo from "../logo";
+import NavLink from "../navlink";
+import BillingSection from "./billing-section";
 
-export default async function Header() {
-  const user = await currentUser();
+type HeaderProps = {
+  src: string;
+  initialTheme: Theme;
+};
+
+export default function Header({ src, initialTheme }: HeaderProps) {
+  // THIS IS THE HACK
+  const pathname = usePathname();
+  if (pathname === Routes.welcome) {
+    return null;
+  }
 
   return (
     <header className="drawer fixed top-0 left-0 w-full bg-base-100 bg-opacity-70 backdrop-blur-lg z-10">
@@ -17,8 +30,8 @@ export default async function Header() {
         <div className="navbar px-4 md:px-32 py-3">
           <div className="flex-1 px-2 gap-16">
             <Link href={Routes.hub} className="flex items-center gap-1">
-              <Logo />
-              <p className="text-lg font-bold select-none">pyngme</p>
+              <Logo src={src} />
+              <p className="text-lg font-bold select-none">Pyngme</p>
             </Link>
             <div className="flex-none hidden lg:block">
               <ul className="flex gap-4">
@@ -35,10 +48,11 @@ export default async function Header() {
             </div>
           </div>
           <div className="flex gap-4">
+            <BillingSection />
             <div className="hidden lg:block">
-              <ThemeSelector />
+              <ThemeSelector initialTheme={initialTheme} />
             </div>
-            <Auth isSignedIn={!!user} />
+            <Auth />
           </div>
           <div className="flex-none ml-2 lg:hidden">
             <label
@@ -68,7 +82,7 @@ export default async function Header() {
             <NavLink href={Routes.pricing}>Pricing</NavLink>
           </li>
           <li className="lg:hidden mt-4">
-            <ThemeSelector />
+            <ThemeSelector initialTheme={initialTheme} />
           </li>
         </ul>
       </div>

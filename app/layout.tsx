@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { THEMES, THEME_COOKIE_NAME } from "@/theme/constants";
+import { THEME_COOKIE_NAME } from "@/theme/constants";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Theme } from "daisyui";
 import { cookies } from "next/headers";
+import Script from "next/script";
 import { Toaster } from "react-hot-toast";
-import Header from "./components/header";
+import Header from "./components/header/header";
+import Routes from "./routes";
 import {
   getBackground,
   getErrorColor,
@@ -36,6 +38,9 @@ export default function RootLayout({
 
   return (
     <ClerkProvider
+      afterSignOutUrl={`${process.env.NEXT_PUBLIC_APP_URL}${Routes.hub}`}
+      signInFallbackRedirectUrl={`${process.env.NEXT_PUBLIC_APP_URL}${Routes.hub}`}
+      signUpFallbackRedirectUrl={`${process.env.NEXT_PUBLIC_APP_URL}${Routes.welcome}`}
       appearance={{
         baseTheme: isLightTheme(theme) ? undefined : dark,
         variables: {
@@ -52,7 +57,10 @@ export default function RootLayout({
       <html lang="en" data-theme={theme}>
         <body className={inter.className}>
           <main>
-            <Header />
+            <Header
+              src={isLightTheme(theme) ? "/logo-light.png" : "/logo-dark.png"}
+              initialTheme={theme}
+            />
             <main>{children}</main>
             <Toaster
               toastOptions={{
@@ -66,6 +74,10 @@ export default function RootLayout({
           </main>
         </body>
       </html>
+      <Script
+        src="https://app.lemonsqueezy.com/js/lemon.js"
+        strategy="lazyOnload"
+      />
     </ClerkProvider>
   );
 }

@@ -9,7 +9,7 @@ export default function EveryInput(props: UseControllerProps<IFormInput>) {
 
   return (
     <div className="relative">
-      <div className="tooltip" data-tip="Check every">
+      <div className="tooltip tooltip-left" data-tip="Run every">
         <select
           disabled={field.disabled}
           className="select select-bordered w-full max-w-xs pl-10"

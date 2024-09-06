@@ -6,7 +6,6 @@ export default function ForInput({
   ...props
 }: UseControllerProps<IFormInput> & { isDisabled: boolean }) {
   const { field, fieldState } = useController(props);
-  console.log("fieldState: ", fieldState.error);
 
   return (
     <div className="w-full">

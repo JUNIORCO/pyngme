@@ -1,30 +1,70 @@
 "use client";
 
 import Routes from "@/routes";
-import { UserButton, useClerk } from "@clerk/nextjs";
+import { useClerk, useUser } from "@clerk/nextjs";
+import type { UserResource } from "@clerk/types";
 import Link from "next/link";
+import { useState } from "react";
+import { LoaderIcon } from "react-hot-toast";
 
-const UserProfile = () => {
+const UserProfile = ({ user }: { user: UserResource }) => {
+  const [loading, setLoading] = useState(false);
   const clerk = useClerk();
 
-  return clerk.loaded ? (
-    <UserButton />
-  ) : (
-    <div className="skeleton w-7 h-7 rounded-full" />
+  const showProfile = user?.imageUrl;
+
+  const handleSignOut = () => {
+    setLoading(true);
+    clerk.signOut(() => {
+      setLoading(false);
+    });
+  };
+
+  return (
+    <div className="dropdown dropdown-bottom dropdown-end">
+      <div tabIndex={0} role="button" className="avatar">
+        <div className="w-10 rounded-full">
+          <img src={clerk.user?.imageUrl} alt="User avatar" />
+        </div>
+      </div>
+      <ul
+        tabIndex={0}
+        className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+      >
+        <li onClick={() => clerk.openUserProfile()}>
+          <p>Profile</p>
+        </li>
+        <li>
+          <p>Billing</p>
+        </li>
+        <li onClick={handleSignOut}>
+          <p>Sign Out {loading ? <LoaderIcon /> : null}</p>
+        </li>
+      </ul>
+    </div>
   );
 };
 
-type AuthProps = {
-  isSignedIn: boolean;
-};
-export default function Auth({ isSignedIn }: AuthProps) {
-  return isSignedIn ? (
-    <UserProfile />
+const AuthLoaded = () => {
+  const { user } = useUser();
+
+  return user ? (
+    <UserProfile user={user} />
   ) : (
     <Link href={Routes.signUp}>
       <button type="button" className="btn btn-outline">
         Sign Up
       </button>
     </Link>
+  );
+};
+
+export default function Auth() {
+  const { isLoaded } = useUser();
+
+  return isLoaded ? (
+    <AuthLoaded />
+  ) : (
+    <div className="skeleton w-10 h-10 rounded-full" />
   );
 }

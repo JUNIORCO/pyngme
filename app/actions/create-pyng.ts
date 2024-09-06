@@ -14,6 +14,13 @@ export async function createPyng(data: IFormInput) {
   try {
     console.log("Creating pyng...", data);
 
+    if (!data.clerkUserId) {
+      throw new Error("clerkUserId is required");
+    }
+    if (!data.stripeCustomerId) {
+      throw new Error("stripeCustomerId is required");
+    }
+
     const openai = new OpenAI();
     const completion = await openai.chat.completions.create({
       messages: [
@@ -35,12 +42,13 @@ For example, a user can set up "email <> when <a new blog post is release> for <
     const pyng = await prisma.pyng.create({
       data: {
         name,
-        userId: data.userId,
         email: data.email,
         every: data.every,
         timezone: data.timezone,
         url: data.for,
         condition: data.when,
+        clerkUserId: data.clerkUserId,
+        stripeCustomerId: data.stripeCustomerId,
       },
     });
 
