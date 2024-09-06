@@ -5,7 +5,7 @@ import stripe from "./stripe";
 
 export const firstRun = task({
   id: "first-run",
-  onSuccess: async (payload, output, { ctx }) => {
+  onSuccess: async (payload, output) => {
     console.log("Creating schedule...");
 
     const schedule = await schedules.create(output.schedulePayload);
@@ -44,6 +44,12 @@ export const firstRun = task({
     };
   }) => {
     const { pyngId, schedulePayload } = payload;
+
+    console.log("Running first run for pyng", {
+      where: {
+        id: pyngId,
+      },
+    });
     // current pyng
     const currentPyng = await prisma.pyng.findUniqueOrThrow({
       where: {

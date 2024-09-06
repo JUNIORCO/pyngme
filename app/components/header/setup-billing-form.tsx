@@ -48,7 +48,7 @@ export default function SetupBillingForm() {
   return (
     <dialog id="stripe_modal" className="modal">
       <div className="modal-box">
-        <form method="dialog" className="flex justify-end">
+        <form method="dialog" className="flex justify-end mb-2">
           <button type="submit" className="btn btn-sm btn-circle btn-ghost">
             <XIcon className="w-4 h-4" />
           </button>
