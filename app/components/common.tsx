@@ -1,3 +1,5 @@
+import type { ComponentProps } from "react";
+
 export const PageContentContainer = ({
   children,
 }: { children: React.ReactNode }) => {
@@ -8,6 +10,12 @@ export const PageContentContainer = ({
   );
 };
 
-export const Title = ({ children }: { children: React.ReactNode }) => {
-  return <h1 className="text-2xl font-bold">{children}</h1>;
+export const Title = ({
+  className,
+  children,
+}: {
+  className?: ComponentProps<"h1">["className"];
+  children: React.ReactNode;
+}) => {
+  return <h1 className={`text-2xl font-bold ${className}`}>{children}</h1>;
 };

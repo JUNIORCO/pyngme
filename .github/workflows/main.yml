@@ -43,13 +43,14 @@ jobs:
       - name: Prisma Migrate Deploy
         run: npx prisma migrate deploy
 
-      - name: Check for changes in app/trigger
+      - name: Check for changes in app/trigger or prisma
         uses: dorny/paths-filter@v3
         id: filter
         with:
           filters: |
             trigger:
               - 'app/trigger/**'
+              - 'prisma/**'
 
       - name: Trigger Deploy
         if: steps.filter.outputs.trigger == 'true'

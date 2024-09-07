@@ -12,13 +12,16 @@ import prisma from "../../prisma/prisma";
 
 export async function createPyng(data: IFormInput) {
   try {
-    console.log("Creating pyng...", data);
+    console.log("Creating pyng with data: ", data);
 
     if (!data.clerkUserId) {
       throw new Error("clerkUserId is required");
     }
     if (!data.stripeCustomerId) {
       throw new Error("stripeCustomerId is required");
+    }
+    if (!data.email) {
+      throw new Error("email is required");
     }
 
     const openai = new OpenAI();
@@ -32,7 +35,7 @@ For example, a user can set up "email <> when <a new blog post is release> for <
         },
         {
           role: "user",
-          content: `Generate a short name for this Pyng:\n\nWhen: ${data.when}\nFor: ${data.for}\n\nDo not format the name. Just return the name without quotation marks. If you are going to add "alert" to the name, instead add "Pyng"`,
+          content: `Generate a short name for this Pyng:\n\nWhen: ${data.when}\nFor: ${data.for}\n\nDo not format the name. Just return the name without quotation marks. If you are going to add "alert" to the name, do not. Do not use "Pyng" or "alert" or "notification".`,
         },
       ],
       model: "gpt-4o-mini",

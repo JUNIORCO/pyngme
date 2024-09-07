@@ -1,5 +1,8 @@
+"use client";
+
 import { Title } from "@/components/common";
 import Routes from "@/routes";
+import { useUser } from "@clerk/nextjs";
 import type { Pyng } from "@prisma/client";
 import Link from "next/link";
 import PyngsTable from "./pyngs-table";
@@ -9,9 +12,15 @@ type PyngsSectionProps = {
 };
 
 export default function PyngsSection({ pyngs }: PyngsSectionProps) {
+  const { user } = useUser();
+  const email = user?.primaryEmailAddress?.emailAddress;
+
   return (
     <div className="flex flex-col gap-4">
-      <Title>Pyngs</Title>
+      <div className="flex flex-col gap-1">
+        <Title>Pyngs</Title>
+        <p>Pyngs will be sent to {email} when the condition is met.</p>
+      </div>
       {pyngs.length > 0 ? (
         <PyngsTable pyngs={pyngs} />
       ) : (

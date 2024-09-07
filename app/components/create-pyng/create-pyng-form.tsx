@@ -6,7 +6,6 @@ import { LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { type SubmitHandler, useFormContext } from "react-hook-form";
 import toast from "react-hot-toast";
-import EmailDropdown from "./email-dropdown";
 import EveryInput from "./every-input";
 import ForInput from "./for-input";
 import type { IFormInput } from "./types";
@@ -58,7 +57,7 @@ export default function CreatePyngForm({
       return;
     }
 
-    toast.success("Hold on, this could take 10 seconds.", {
+    toast.success("Hold on, this takes a few seconds...", {
       icon: "⏳",
       duration: 3500,
     });
@@ -91,19 +90,6 @@ export default function CreatePyngForm({
       className="flex flex-col gap-4 w-full md:w-[40%] self-center"
     >
       <div className="flex flex-col gap-4">
-        <EmailDropdown
-          control={control}
-          name="email"
-          disabled={disabled}
-          rules={{
-            required: true,
-            pattern: {
-              value: /\S+@\S+\.\S+/,
-              message: "Invalid email address",
-            },
-          }}
-          userEmail={userEmail}
-        />
         <WhenInput
           control={control}
           name="when"

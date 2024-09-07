@@ -15,26 +15,15 @@ export default function PopularPyngsCard({
   const { setValue } = useFormContext<IFormInput>();
 
   const handleClick = () => {
-    const emailInput = document.getElementById(
-      "email-input",
-    ) as HTMLInputElement;
     const whenInput = document.getElementById("when-input") as HTMLInputElement;
     const forInput = document.getElementById("for-input") as HTMLInputElement;
 
-    if (emailInput) {
-      emailInput.scrollIntoView({ behavior: "smooth" });
-      if (userEmail) {
-        setValue("email", userEmail);
-        if (forInput) {
-          forInput.focus();
-        }
-      } else {
-        emailInput.focus();
-      }
-    }
-
     if (whenInput) {
       setValue("when", content);
+    }
+
+    if (forInput) {
+      forInput.focus();
     }
   };
 

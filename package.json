@@ -29,6 +29,7 @@
     "lucide-react": "^0.438.0",
     "next": "^14.2.8",
     "openai": "^4.57.1",
+    "posthog-js": "^1.160.3",
     "prisma": "^5.19.1",
     "react": "^18",
     "react-dom": "^18",

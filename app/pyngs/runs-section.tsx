@@ -1,11 +1,11 @@
 "use client";
 
 import { Title } from "@/components/common";
-import type { Run } from "@prisma/client";
+import type { Pyng, Run } from "@prisma/client";
 import RunsTable from "./runs-table";
 
 type RunsSectionProps = {
-  runs: Run[];
+  runs: (Run & { pyng: Pyng })[];
 };
 
 export default function RunsSection({ runs }: RunsSectionProps) {

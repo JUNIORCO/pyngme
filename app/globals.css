@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   .cl-footer > div:nth-child(2) {
     display: none;
   }
@@ -16,7 +16,7 @@
 
 .cl-userButtonPopoverFooter {
   display: none;
-}
+} */
 
 /* set the z-index to 1 because when opening a drawer, it should be behind the drawer */
 .cl-card {
@@ -30,6 +30,6 @@
   }
 }
 
-.cl-navbar > div:last-child {
+/* .cl-navbar > div:last-child {
   display: none;
-}
+} */

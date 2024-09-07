@@ -30,17 +30,18 @@ export default async function Pyngs() {
     orderBy: {
       createdAt: "desc",
     },
-    take: 10,
   });
 
   const runsPromise = prisma.run.findMany({
     where: {
       clerkUserId: user.id,
     },
+    include: {
+      pyng: true,
+    },
     orderBy: {
       createdAt: "desc",
     },
-    take: 10,
   });
 
   const [pyngs, runs] = await Promise.all([pyngsPromise, runsPromise]);

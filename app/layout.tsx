@@ -10,6 +10,7 @@ import { cookies } from "next/headers";
 import Script from "next/script";
 import { Toaster } from "react-hot-toast";
 import Header from "./components/header/header";
+import { CSPostHogProvider } from "./providers/posthog";
 import Routes from "./routes";
 import {
   getBackground,
@@ -20,7 +21,6 @@ import {
   getWarningColor,
   isLightTheme,
 } from "./theme/helpers";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -54,26 +54,28 @@ export default function RootLayout({
         },
       }}
     >
-      <html lang="en" data-theme={theme}>
-        <body className={inter.className}>
-          <main>
-            <Header
-              src={isLightTheme(theme) ? "/logo-light.png" : "/logo-dark.png"}
-              initialTheme={theme}
-            />
-            <main>{children}</main>
-            <Toaster
-              toastOptions={{
-                style: {
-                  background: getBackground(theme),
-                  color: getTextColor(theme),
-                },
-              }}
-            />
-            <SpeedInsights />
-          </main>
-        </body>
-      </html>
+      <CSPostHogProvider>
+        <html lang="en" data-theme={theme}>
+          <body className={inter.className}>
+            <main>
+              <Header
+                src={isLightTheme(theme) ? "/logo-light.png" : "/logo-dark.png"}
+                initialTheme={theme}
+              />
+              <main>{children}</main>
+              <Toaster
+                toastOptions={{
+                  style: {
+                    background: getBackground(theme),
+                    color: getTextColor(theme),
+                  },
+                }}
+              />
+              <SpeedInsights />
+            </main>
+          </body>
+        </html>
+      </CSPostHogProvider>
       <Script
         src="https://app.lemonsqueezy.com/js/lemon.js"
         strategy="lazyOnload"

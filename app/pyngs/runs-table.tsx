@@ -2,11 +2,11 @@
 
 import Modal from "@/components/modal/modal";
 import { useModal } from "@/components/modal/useModal";
-import type { Run } from "@prisma/client";
+import type { Pyng, Run } from "@prisma/client";
 import CustomMarkdown from "./custom-markdown";
 
 type RunsTableProps = {
-  runs: Run[];
+  runs: (Run & { pyng: Pyng })[];
 };
 
 export default function RunsTable({ runs }: RunsTableProps) {
@@ -17,6 +17,7 @@ export default function RunsTable({ runs }: RunsTableProps) {
       <table className="table">
         <thead>
           <tr>
+            <th>Pyng Name</th>
             <th>Scrape</th>
             <th>Reasoning</th>
             <th>Email Sent</th>
@@ -26,10 +27,11 @@ export default function RunsTable({ runs }: RunsTableProps) {
         <tbody>
           {runs.map((run) => (
             <tr key={run.id} className="hover">
+              <td>{run.pyng.name}</td>
               <td>
                 <button
                   type="button"
-                  className="btn btn-outline btn-sm"
+                  className="btn btn-sm"
                   onClick={() =>
                     openModal(<CustomMarkdown>{run.scrape}</CustomMarkdown>)
                   }
@@ -37,8 +39,16 @@ export default function RunsTable({ runs }: RunsTableProps) {
                   View
                 </button>
               </td>
-              <td>{run.reasoning}</td>
-              <td>{run.sentEmail ? "Yes" : "No"}</td>
+              <td>
+                <button
+                  type="button"
+                  className="btn btn-sm"
+                  onClick={() => openModal(<p>{run.reasoning}</p>)}
+                >
+                  View
+                </button>
+              </td>
+              <td>{run.sentEmail ? "✅" : "❌"}</td>
               <td>{run.createdAt.toLocaleString()}</td>
             </tr>
           ))}

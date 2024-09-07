@@ -55,7 +55,7 @@ model Run {
 
   // relationships
   pyngId String @map("pyng_id")
-  pyng Pyng @relation(fields: [pyngId], references: [id])
+  pyng Pyng @relation(fields: [pyngId], references: [id], onDelete: Cascade)
 
   // dates
   createdAt DateTime @default(now()) @map("created_at")

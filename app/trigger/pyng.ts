@@ -61,6 +61,7 @@ export const pyngTask = schedules.task({
     const openai = new OpenAI();
     const ShouldSendEmailReasoning = z.object({
       reasoning: z.string(),
+      reflection: z.string(),
       shouldSendEmail: z.boolean(),
     });
     const completion = await openai.beta.chat.completions.parse({
@@ -89,7 +90,7 @@ export const pyngTask = schedules.task({
     const run = await prisma.run.create({
       data: {
         scrape: markdown,
-        reasoning: message?.reasoning || "",
+        reasoning: `Reasoning:\n${message?.reasoning}\n\nReflection:\n${message?.reflection}`,
         sentEmail: message?.shouldSendEmail || false,
         pyngId,
         clerkUserId: currentPyng.clerkUserId,
@@ -109,13 +110,12 @@ export const pyngTask = schedules.task({
     const emailResponse = await resend.emails.send({
       from: "Pyngme <no-reply@trypyngme.com>",
       to: currentPyng.email,
-      subject: "Your Pyng has been triggered!",
+      subject: "A Pyng has been triggered",
       html: `
         <div>
-    <h1>Hey!</h1>
-    <p>Your pyng has been triggered!</p>
-    <p>Url: ${currentPyng.url}</p>
-    <p>Condition: ${currentPyng.condition}</p>
+    <h2>Hello,</h2>
+    <p>The Pyng "${currentPyng.name}" has been triggered.</p>
+    <p>See it <a href="https://trypyngme.com/pyngs">here</a>.</p>
     <p>Thanks for using Pyngme.</p>
   </div>
       `,
