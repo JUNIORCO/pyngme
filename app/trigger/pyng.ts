@@ -23,10 +23,6 @@ export const pyngTask = schedules.task({
       },
     });
 
-    if (output.skip) {
-      return;
-    }
-
     const pyngId = payload.externalId;
     if (!pyngId) {
       throw new Error("externalId (which is the pyngId) is required");
@@ -144,7 +140,6 @@ export const pyngTask = schedules.task({
     if (!message?.shouldSendEmail) {
       console.log("Condition not met, done.");
       return {
-        skip: true,
         runId: run.id,
       };
     }
@@ -173,7 +168,6 @@ export const pyngTask = schedules.task({
     }
 
     return {
-      skip: false,
       runId: run.id,
     };
   },
