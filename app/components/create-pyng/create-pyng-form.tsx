@@ -12,26 +12,16 @@ import type { IFormInput } from "./types";
 import WhenInput from "./when-input";
 
 type CreatePyngFormProps = {
-  userEmail: string | undefined;
   clerkUserId: string | undefined;
-  stripeSubscriptionId: string | undefined;
-  stripeSetupSucceeded: boolean | undefined;
 };
 
-export default function CreatePyngForm({
-  userEmail,
-  clerkUserId,
-  stripeSubscriptionId,
-  stripeSetupSucceeded,
-}: CreatePyngFormProps) {
+export default function CreatePyngForm({ clerkUserId }: CreatePyngFormProps) {
   const {
     control,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting: disabled },
     reset,
   } = useFormContext<IFormInput>();
-
-  const disabled = isSubmitting;
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     if (!clerkUserId) {
@@ -47,13 +37,6 @@ export default function CreatePyngForm({
           duration: 3500,
         },
       );
-      return;
-    }
-
-    if (!stripeSubscriptionId || !stripeSetupSucceeded) {
-      toast.error("Please set up billing to create Pyngs.", {
-        duration: 3500,
-      });
       return;
     }
 

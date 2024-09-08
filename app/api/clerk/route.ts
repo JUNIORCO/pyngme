@@ -1,5 +1,4 @@
 import type { WebhookEvent } from "@clerk/nextjs/server";
-import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { Webhook } from "svix";
 import onUserCreate from "./on-user-create";
@@ -31,13 +30,10 @@ export async function POST(request: Request) {
         break;
       }
       case "user.deleted": {
-        const userId = payload.data.id;
-        await onUserDelete(userId);
+        await onUserDelete(payload.data.id);
         break;
       }
     }
-
-    revalidatePath("/");
 
     return Response.json({ message: "Received" });
   } catch (e) {

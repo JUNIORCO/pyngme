@@ -33,7 +33,7 @@ export default function SetupBilling({
   return setupIntent ? (
     <SetupBillingBtn clientSecret={setupIntent.client_secret} />
   ) : (
-    <button type="button" className="btn btn-primary btn-disabled">
+    <button type="button" className="btn btn-secondary btn-disabled">
       Loading <LoaderCircle className="w-4 h-4 animate-spin" />
     </button>
   );

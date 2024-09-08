@@ -6,7 +6,8 @@ import Usage from "./usage";
 
 export default function BillingSection() {
   const { user } = useUser();
-  const userSetupSucceeded = user?.publicMetadata.stripeSetupSucceeded as
+  const clerkUserId = user?.id;
+  const stripeSetupSucceeded = user?.publicMetadata.stripeSetupSucceeded as
     | boolean
     | undefined;
   const stripeSubscriptionId = user?.publicMetadata.stripeSubscriptionId as
@@ -19,12 +20,15 @@ export default function BillingSection() {
     | string
     | undefined;
 
-  return !userSetupSucceeded ? (
-    <SetupBilling stripeSetupIntentId={stripeSetupIntentId} />
-  ) : (
-    <Usage
-      stripeCustomerId={stripeCustomerId}
-      stripeSubscriptionId={stripeSubscriptionId}
-    />
+  return (
+    <div className="flex flex-col md:flex-row gap-4">
+      <SetupBilling stripeSetupIntentId={stripeSetupIntentId} />
+      <Usage
+        stripeCustomerId={stripeCustomerId}
+        stripeSubscriptionId={stripeSubscriptionId}
+        clerkUserId={clerkUserId}
+        stripeSetupSucceeded={stripeSetupSucceeded}
+      />
+    </div>
   );
 }

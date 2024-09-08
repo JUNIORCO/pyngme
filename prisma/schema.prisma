@@ -16,20 +16,26 @@ enum EveryOption {
   Day
 }
 
+enum RunStatus {
+  Pending
+  Success
+  Failure
+}
 
 model Pyng {
   // id
   id String @id @default(cuid())
 
   // properties
-  stripeCustomerId String @map("stripe_customer_id")
-  clerkUserId String @map("clerk_user_id")
   name String
   email String 
   every EveryOption
   timezone String 
   url String
   condition String
+
+  stripeCustomerId String @map("stripe_customer_id")
+  clerkUserId String @map("clerk_user_id")
   triggerScheduleId String? @map("trigger_schedule_id")
 
   // relationships
@@ -52,6 +58,8 @@ model Run {
   reasoning String
   sentEmail Boolean @map("sent_email")
   clerkUserId String @map("clerk_user_id")
+  status RunStatus
+  error String?
 
   // relationships
   pyngId String @map("pyng_id")

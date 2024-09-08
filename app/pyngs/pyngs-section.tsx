@@ -19,7 +19,9 @@ export default function PyngsSection({ pyngs }: PyngsSectionProps) {
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
         <Title>Pyngs</Title>
-        <p>Pyngs will be sent to {email} when the condition is met.</p>
+        {pyngs.length > 0 ? (
+          <p>Pyngs will be sent to {email} when the condition is met.</p>
+        ) : null}
       </div>
       {pyngs.length > 0 ? (
         <PyngsTable pyngs={pyngs} />

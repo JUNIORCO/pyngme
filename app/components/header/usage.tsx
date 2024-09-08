@@ -1,17 +1,26 @@
 "use client";
 
 import { fetchUsage } from "@/actions/fetch-usage";
+import { MAX_FREE_RUNS_PER_MONTH } from "@/trigger/constants";
 import { useEffect, useState } from "react";
 
 type UsageProps = {
+  clerkUserId: string | undefined;
   stripeSubscriptionId: string | undefined;
   stripeCustomerId: string | undefined;
+  stripeSetupSucceeded: boolean | undefined;
 };
 
 export default function Usage({
+  clerkUserId,
   stripeCustomerId,
   stripeSubscriptionId,
+  stripeSetupSucceeded,
 }: UsageProps) {
+  if (!clerkUserId) {
+    console.error("Clerk user ID not found");
+    return null;
+  }
   if (!stripeCustomerId) {
     console.error("Stripe customer ID not found");
     return null;
@@ -24,10 +33,14 @@ export default function Usage({
   const [loading, setLoading] = useState(true);
   const [totalUsage, setTotalUsage] = useState(0);
 
+  const hasReachedMaxFreeRuns =
+    totalUsage >= MAX_FREE_RUNS_PER_MONTH && !stripeSetupSucceeded;
+
   useEffect(() => {
     const getUsage = async () => {
       setLoading(true);
       const totalUsage = await fetchUsage(
+        clerkUserId,
         stripeCustomerId,
         stripeSubscriptionId,
       );
@@ -48,9 +61,12 @@ export default function Usage({
         {loading ? (
           <span className="loading loading-dots loading-xs" />
         ) : (
-          `${totalUsage.toLocaleString()} runs`
+          `${totalUsage.toLocaleString()} run${totalUsage === 1 ? "" : "s"}`
         )}
       </div>
+      {hasReachedMaxFreeRuns && (
+        <div className="badge badge-error">Max free runs.</div>
+      )}
     </button>
   );
 }

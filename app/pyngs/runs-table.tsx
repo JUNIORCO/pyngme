@@ -12,6 +12,8 @@ type RunsTableProps = {
 export default function RunsTable({ runs }: RunsTableProps) {
   const { openModal, closeModal, content } = useModal();
 
+  console.log(runs);
+
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -21,6 +23,8 @@ export default function RunsTable({ runs }: RunsTableProps) {
             <th>Scrape</th>
             <th>Reasoning</th>
             <th>Email Sent</th>
+            <th>Status</th>
+            <th>Error</th>
             <th>Ran At</th>
           </tr>
         </thead>
@@ -49,6 +53,8 @@ export default function RunsTable({ runs }: RunsTableProps) {
                 </button>
               </td>
               <td>{run.sentEmail ? "✅" : "❌"}</td>
+              <td>{run.status}</td>
+              <td>{run.error}</td>
               <td>{run.createdAt.toLocaleString()}</td>
             </tr>
           ))}

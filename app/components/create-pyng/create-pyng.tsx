@@ -7,15 +7,9 @@ import { useModal } from "../modal/useModal";
 import CreatePyngForm from "./create-pyng-form";
 
 export default function CreatePyng({
-  userEmail,
   clerkUserId,
-  stripeSubscriptionId,
-  stripeSetupSucceeded,
 }: {
-  userEmail: string | undefined;
   clerkUserId: string | undefined;
-  stripeSubscriptionId: string | undefined;
-  stripeSetupSucceeded: boolean | undefined;
 }) {
   const { openModal, closeModal, content } = useModal();
 
@@ -29,12 +23,7 @@ export default function CreatePyng({
         How it works <MousePointerClick className="w-4 h-4" />
       </button>
       <Title className="text-center">Pyngme</Title>
-      <CreatePyngForm
-        userEmail={userEmail}
-        clerkUserId={clerkUserId}
-        stripeSubscriptionId={stripeSubscriptionId}
-        stripeSetupSucceeded={stripeSetupSucceeded}
-      />
+      <CreatePyngForm clerkUserId={clerkUserId} />
       <Modal content={content} closeModal={closeModal} />
     </div>
   );

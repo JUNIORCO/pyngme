@@ -11,17 +11,13 @@ import { FormProvider, useForm } from "react-hook-form";
 type HomePageContentProps = {
   userEmail: string | undefined;
   clerkUserId: string | undefined;
-  stripeSubscriptionId: string | undefined;
   stripeCustomerId: string | undefined;
-  stripeSetupSucceeded: boolean | undefined;
 };
 
 export default function HomePageContent({
   userEmail,
   clerkUserId,
-  stripeSubscriptionId,
   stripeCustomerId,
-  stripeSetupSucceeded,
 }: HomePageContentProps) {
   const methods = useForm<IFormInput>({
     defaultValues: {
@@ -49,12 +45,7 @@ export default function HomePageContent({
   return (
     <PageContentContainer>
       <FormProvider {...methods}>
-        <CreatePyng
-          userEmail={userEmail}
-          clerkUserId={clerkUserId}
-          stripeSubscriptionId={stripeSubscriptionId}
-          stripeSetupSucceeded={stripeSetupSucceeded}
-        />
+        <CreatePyng clerkUserId={clerkUserId} />
         <PopularPyngs userEmail={userEmail} />
       </FormProvider>
     </PageContentContainer>

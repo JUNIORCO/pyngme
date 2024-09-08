@@ -1,5 +1,4 @@
 import { clerkClient } from "@clerk/nextjs/server";
-import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import Stripe from "stripe";
 
@@ -32,6 +31,30 @@ export async function POST(request: Request) {
     console.log("Event type: ", event.type);
 
     switch (event.type) {
+      // reset run count
+      case "invoice.created": {
+        const invoice = event.data.object as Stripe.Invoice;
+        const customerId = invoice.customer as string;
+
+        const customer = await stripe.customers.retrieve(customerId);
+        if (customer.deleted) {
+          throw new Error("Customer has been deleted.");
+        }
+
+        const clerkUserId = customer.metadata.clerkUserId as string | undefined;
+        if (!clerkUserId) {
+          throw new Error("Clerk user ID not found on customer.");
+        }
+
+        const clerk = clerkClient();
+        await clerk.users.updateUserMetadata(clerkUserId, {
+          publicMetadata: {
+            runCount: 0,
+          },
+        });
+        break;
+      }
+
       case "setup_intent.succeeded": {
         console.log("Setup intent succeeded");
         const setupIntent = event.data.object as Stripe.SetupIntent;
@@ -56,8 +79,6 @@ export async function POST(request: Request) {
         break;
       }
     }
-
-    revalidatePath("/");
 
     return Response.json({ received: true });
   } catch (e) {

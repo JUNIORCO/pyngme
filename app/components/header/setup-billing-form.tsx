@@ -53,6 +53,13 @@ export default function SetupBillingForm() {
             <XIcon className="w-4 h-4" />
           </button>
         </form>
+        <div>
+          <h3 className="text-lg font-bold">Setup Billing (Optional)</h3>
+          <p>
+            You need to setup billing to use more than 100 Pyngs per month.
+            Otherwise, this step is completely optional!
+          </p>
+        </div>
         <form onSubmit={handleSubmit}>
           <PaymentElement />
           <button

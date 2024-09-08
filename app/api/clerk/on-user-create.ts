@@ -44,9 +44,11 @@ export default async function onUserCreate(data: UserJSON) {
   const clerk = clerkClient();
   const updatedUser = await clerk.users.updateUserMetadata(data.id, {
     publicMetadata: {
+      runCount: 0,
       stripeCustomerId: customer.id,
       stripeSetupIntentId: setupIntentId,
       stripeSubscriptionId: subscription.id,
+      stripeSetupSucceeded: false,
     },
   });
 

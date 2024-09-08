@@ -4,6 +4,8 @@ import { zodResponseFormat } from "openai/helpers/zod";
 import { Resend } from "resend";
 import { z } from "zod";
 import prisma from "../../prisma/prisma";
+import clerk from "./clerk";
+import { MAX_FREE_RUNS_PER_MONTH } from "./constants";
 import { SYSTEM_PROMPT, USER_PROMPT } from "./prompts";
 import scrape from "./scrape";
 import stripe from "./stripe";
@@ -23,14 +25,30 @@ export const pyngTask = schedules.task({
       },
     });
 
-    console.log("Creating billing meter event...");
-    const meterEvent = await stripe.billing.meterEvents.create({
-      event_name: "pyng_run",
-      payload: {
-        stripe_customer_id: currentPyng.stripeCustomerId,
-      },
-    });
-    console.log("Billing meter event created", meterEvent);
+    const user = await clerk.users.getUser(currentPyng.clerkUserId);
+    const runCount = user.publicMetadata.runCount as number;
+
+    if (runCount < MAX_FREE_RUNS_PER_MONTH) {
+      console.log("Updating run count...");
+      const updatedUser = await clerk.users.updateUserMetadata(
+        currentPyng.clerkUserId,
+        {
+          publicMetadata: {
+            runCount: runCount + 1,
+          },
+        },
+      );
+      console.log("Run count updated", updatedUser.publicMetadata.runCount);
+    } else {
+      console.log("Creating billing meter event...");
+      const meterEvent = await stripe.billing.meterEvents.create({
+        event_name: "pyng_run",
+        payload: {
+          stripe_customer_id: currentPyng.stripeCustomerId,
+        },
+      });
+      console.log("Billing meter event created", meterEvent);
+    }
   },
   run: async (payload) => {
     const pyngId = payload.externalId;
@@ -44,6 +62,15 @@ export const pyngTask = schedules.task({
         id: pyngId,
       },
     });
+
+    const clerkUserId = currentPyng.clerkUserId;
+    const clerkUser = await clerk.users.getUser(clerkUserId);
+    const stripeSetupSucceeded = clerkUser.publicMetadata
+      .stripeSetupSucceeded as boolean | undefined;
+    const runCount = clerkUser.publicMetadata.runCount as number;
+    if (!stripeSetupSucceeded && runCount >= MAX_FREE_RUNS_PER_MONTH) {
+      throw new Error("User has reached the maximum number of free runs.");
+    }
 
     // previous run
     const previousRun = await prisma.run.findFirstOrThrow({
