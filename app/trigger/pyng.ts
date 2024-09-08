@@ -14,6 +14,15 @@ import stripe from "./stripe";
 export const pyngTask = schedules.task({
   id: "pyng",
   onSuccess: async (payload, output: { skip: boolean; runId: string }) => {
+    await prisma.run.update({
+      where: {
+        id: output.runId,
+      },
+      data: {
+        status: RunStatus.Success,
+      },
+    });
+
     if (output.skip) {
       return;
     }
@@ -54,15 +63,6 @@ export const pyngTask = schedules.task({
       });
       console.log("Billing meter event created", meterEvent);
     }
-
-    await prisma.run.update({
-      where: {
-        id: output.runId,
-      },
-      data: {
-        status: RunStatus.Success,
-      },
-    });
   },
   run: async (payload) => {
     const pyngId = payload.externalId;
