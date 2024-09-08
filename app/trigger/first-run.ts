@@ -50,6 +50,15 @@ export const firstRun = task({
       });
       console.log("Billing meter event created", meterEvent);
     }
+
+    await prisma.run.update({
+      where: {
+        id: output.runId,
+      },
+      data: {
+        status: RunStatus.Success,
+      },
+    });
   },
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   onFailure: async (payload, error: any) => {
@@ -133,7 +142,7 @@ export const firstRun = task({
     const markdown = await scrape(currentPyng.url);
 
     // create run
-    await prisma.run.create({
+    const run = await prisma.run.create({
       data: {
         pyngId,
         scrape: markdown,
@@ -148,6 +157,7 @@ export const firstRun = task({
       schedulePayload,
       stripeCustomerId: currentPyng.stripeCustomerId,
       clerkUserId,
+      runId: run.id,
     };
   },
 });

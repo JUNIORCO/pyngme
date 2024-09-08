@@ -1,3 +1,4 @@
+import { RunStatus } from "@prisma/client";
 import { schedules } from "@trigger.dev/sdk/v3";
 import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
@@ -12,7 +13,11 @@ import stripe from "./stripe";
 
 export const pyngTask = schedules.task({
   id: "pyng",
-  onSuccess: async (payload) => {
+  onSuccess: async (payload, output: { skip: boolean; runId: string }) => {
+    if (output.skip) {
+      return;
+    }
+
     const pyngId = payload.externalId;
     if (!pyngId) {
       throw new Error("externalId (which is the pyngId) is required");
@@ -49,6 +54,15 @@ export const pyngTask = schedules.task({
       });
       console.log("Billing meter event created", meterEvent);
     }
+
+    await prisma.run.update({
+      where: {
+        id: output.runId,
+      },
+      data: {
+        status: RunStatus.Success,
+      },
+    });
   },
   run: async (payload) => {
     const pyngId = payload.externalId;
@@ -116,6 +130,7 @@ export const pyngTask = schedules.task({
     // save to db
     const run = await prisma.run.create({
       data: {
+        status: RunStatus.Pending,
         scrape: markdown,
         reasoning: `Reasoning:\n${message?.reasoning}\n\nReflection:\n${message?.reflection}`,
         sentEmail: message?.shouldSendEmail || false,
@@ -128,7 +143,10 @@ export const pyngTask = schedules.task({
 
     if (!message?.shouldSendEmail) {
       console.log("Condition not met, done.");
-      return;
+      return {
+        skip: true,
+        runId: run.id,
+      };
     }
 
     // if condition is met, send email
@@ -153,5 +171,10 @@ export const pyngTask = schedules.task({
     if (emailResponse.error) {
       throw new Error(emailResponse.error.message);
     }
+
+    return {
+      skip: false,
+      runId: run.id,
+    };
   },
 });
