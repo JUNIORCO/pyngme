@@ -1,3 +1,5 @@
+import { diffWords } from "diff";
+
 export const SYSTEM_PROMPT = `
 You are part of a company called Pyngme. The company allows users to setup "pyngs" in natural language, and we must pyng them when the condition has been met.
 
@@ -12,7 +14,13 @@ export const USER_PROMPT = (
   previous: string,
   current: string,
   condition: string,
-) => `Previous run:
+) => {
+  const diff = diffWords(previous, current);
+  const diffString = diff
+    .map((part) => (part.added ? part.value : part.removed ? part.value : ""))
+    .join("");
+
+  return `Previous run:
 ========================================
 ${previous}
 ========================================
@@ -22,6 +30,11 @@ Current run:
 ${current}
 ========================================
 
+Diff:
+========================================
+${diffString}
+========================================
+
 Condition:
 ========================================
 ${condition}
@@ -29,3 +42,4 @@ ${condition}
 
 Should we send an email?
 `;
+};

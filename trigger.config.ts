@@ -22,5 +22,6 @@ export const config: TriggerConfig = {
     "resend@4.0.0",
     "zod@3.23.8",
     "stripe@16.10.0",
+    "diff@7.0.0",
   ],
 };

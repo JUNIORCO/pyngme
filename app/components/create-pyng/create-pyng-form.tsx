@@ -42,7 +42,7 @@ export default function CreatePyngForm({ clerkUserId }: CreatePyngFormProps) {
 
     toast.success("Hold on, this takes a few seconds...", {
       icon: "⏳",
-      duration: 3500,
+      duration: 6000,
     });
 
     const result = await createPyng(data);
