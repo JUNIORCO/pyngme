@@ -13,7 +13,7 @@ import stripe from "./stripe";
 
 export const pyngTask = schedules.task({
   id: "pyng",
-  onSuccess: async (payload, output: { skip: boolean; runId: string }) => {
+  onSuccess: async (payload, output: { runId: string }) => {
     await prisma.run.update({
       where: {
         id: output.runId,
