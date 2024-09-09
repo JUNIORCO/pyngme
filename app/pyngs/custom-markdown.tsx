@@ -1,3 +1,5 @@
+"use client";
+
 import Markdown from "react-markdown";
 
 export default function CustomMarkdown({ children }: { children: string }) {

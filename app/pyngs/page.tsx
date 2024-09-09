@@ -6,7 +6,11 @@ import prisma from "../../prisma/prisma";
 import PyngsSection from "./pyngs-section";
 import RunsSection from "./runs-section";
 
-export default async function Pyngs() {
+export default async function Pyngs({
+  searchParams,
+}: {
+  searchParams?: { page?: string; limit?: string };
+}) {
   const user = await currentUser();
 
   if (!user) {
@@ -23,12 +27,24 @@ export default async function Pyngs() {
     );
   }
 
+  const page = Number.parseInt(searchParams?.page ?? "1", 10);
+  const limit = Number.parseInt(searchParams?.limit ?? "10", 10);
+  const skip = (page - 1) * limit;
+
   const pyngsPromise = prisma.pyng.findMany({
     where: {
       clerkUserId: user.id,
     },
     orderBy: {
       createdAt: "desc",
+    },
+    skip,
+    take: limit,
+  });
+
+  const pyngsCountPromise = prisma.pyng.count({
+    where: {
+      clerkUserId: user.id,
     },
   });
 
@@ -42,14 +58,37 @@ export default async function Pyngs() {
     orderBy: {
       createdAt: "desc",
     },
+    skip,
+    take: limit,
   });
 
-  const [pyngs, runs] = await Promise.all([pyngsPromise, runsPromise]);
+  const runsCountPromise = prisma.run.count({
+    where: {
+      clerkUserId: user.id,
+    },
+  });
+
+  const [pyngs, runs, pyngsCount, runsCount] = await Promise.all([
+    pyngsPromise,
+    runsPromise,
+    pyngsCountPromise,
+    runsCountPromise,
+  ]);
 
   return (
     <PageContentContainer>
-      <PyngsSection pyngs={pyngs} />
-      <RunsSection runs={runs} />
+      <PyngsSection
+        pyngs={pyngs}
+        totalPyngs={pyngsCount}
+        page={page}
+        limit={limit}
+      />
+      <RunsSection
+        runs={runs}
+        totalRuns={runsCount}
+        page={page}
+        limit={limit}
+      />
     </PageContentContainer>
   );
 }
