@@ -22,7 +22,9 @@ export default function BillingSection() {
 
   return (
     <div className="flex flex-col md:flex-row gap-4">
-      <SetupBilling stripeSetupIntentId={stripeSetupIntentId} />
+      {!stripeSetupSucceeded ? (
+        <SetupBilling stripeSetupIntentId={stripeSetupIntentId} />
+      ) : null}
       <Usage
         stripeCustomerId={stripeCustomerId}
         stripeSubscriptionId={stripeSubscriptionId}
