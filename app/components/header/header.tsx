@@ -1,11 +1,8 @@
-"use client";
-
 import Routes from "@/routes";
 import ThemeSelector from "@/theme/theme-selector";
 import type { Theme } from "daisyui";
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import Auth from "../auth";
 import Logo from "../logo";
 import NavLink from "../navlink";
@@ -17,12 +14,6 @@ type HeaderProps = {
 };
 
 export default function Header({ src, initialTheme }: HeaderProps) {
-  // THIS IS THE HACK
-  const pathname = usePathname();
-  if (pathname === Routes.welcome) {
-    return null;
-  }
-
   return (
     <header className="drawer fixed top-0 left-0 w-full bg-base-100 bg-opacity-70 backdrop-blur-lg z-10">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
