@@ -14,12 +14,10 @@ export async function deletePyng(pyngId: string) {
     });
 
     const scheduleId = dbPyng.triggerScheduleId;
-    if (!scheduleId) {
-      throw new Error("Trigger schedule ID not found");
+    if (scheduleId) {
+      const deletedSchedule = await schedules.del(scheduleId);
+      console.log("Deleted schedule: ", deletedSchedule);
     }
-
-    const deletedSchedule = await schedules.del(scheduleId);
-    console.log("Deleted schedule: ", deletedSchedule);
 
     await prisma.pyng.delete({
       where: {
