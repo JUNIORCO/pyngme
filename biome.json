@@ -13,7 +13,8 @@
       "a11y": {
         "useKeyWithClickEvents": "off",
         "useKeyWithMouseEvents": "off",
-        "noNoninteractiveTabindex": "off"
+        "noNoninteractiveTabindex": "off",
+        "useMediaCaption": "off"
       },
       "suspicious": {
         "noRedeclare": "off"

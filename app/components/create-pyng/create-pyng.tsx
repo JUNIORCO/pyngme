@@ -1,6 +1,7 @@
 "use client";
 
 import { MousePointerClick } from "lucide-react";
+import Image from "next/image";
 import { Title } from "../common";
 import Modal from "../modal/modal";
 import { useModal } from "../modal/useModal";
@@ -18,7 +19,14 @@ export default function CreatePyng({
       <button
         type="button"
         className="btn btn-sm w-fit self-center mb-4"
-        onClick={() => openModal(<p>A video on how it works</p>)}
+        onClick={() =>
+          openModal(
+            <video loop controls>
+              <source src="/pyngme_full.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>,
+          )
+        }
       >
         How it works <MousePointerClick className="w-4 h-4" />
       </button>
