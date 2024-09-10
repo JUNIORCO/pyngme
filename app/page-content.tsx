@@ -28,7 +28,6 @@ export default function HomePageContent({
       stripeCustomerId,
     },
   });
-  console.log(methods.watch());
 
   useEffect(() => {
     methods.setValue("email", userEmail);

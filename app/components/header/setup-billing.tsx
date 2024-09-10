@@ -18,20 +18,18 @@ export default function SetupBilling({
     return null;
   }
 
-  const [setupIntent, setSetupIntent] = useState<Stripe.SetupIntent | null>(
-    null,
-  );
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
 
   useEffect(() => {
     const getSetupIntent = async () => {
-      const setupIntent = await fetchSetupIntent(stripeSetupIntentId);
-      setSetupIntent(setupIntent);
+      const { client_secret } = await fetchSetupIntent(stripeSetupIntentId);
+      setClientSecret(client_secret);
     };
     getSetupIntent();
   }, []);
 
-  return setupIntent ? (
-    <SetupBillingBtn clientSecret={setupIntent.client_secret} />
+  return clientSecret ? (
+    <SetupBillingBtn clientSecret={clientSecret} />
   ) : (
     <button type="button" className="btn btn-secondary btn-disabled">
       Loading <LoaderCircle className="w-4 h-4 animate-spin" />
