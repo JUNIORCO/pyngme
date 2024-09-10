@@ -22,6 +22,7 @@ import {
   isLightTheme,
 } from "./theme/helpers";
 const inter = Inter({ subsets: ["latin"] });
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Pyngme",
@@ -34,7 +35,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookieStore = cookies();
-  const theme = (cookieStore.get(THEME_COOKIE_NAME)?.value || "cupcake") as Theme;
+  const theme = (cookieStore.get(THEME_COOKIE_NAME)?.value ||
+    "cupcake") as Theme;
 
   return (
     <ClerkProvider
@@ -71,7 +73,9 @@ export default function RootLayout({
                   },
                 }}
               />
+
               <SpeedInsights />
+              <Analytics />
             </main>
           </body>
         </html>
