@@ -32,7 +32,13 @@ const UserProfile = () => {
           <p>Profile</p>
         </li>
         <li>
-          <p>Billing</p>
+          <a
+            href={process.env.NEXT_PUBLIC_STRIPE_BILLING_URL}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <p>Billing</p>
+          </a>
         </li>
         <li onClick={handleSignOut}>
           <p>Sign Out {loading ? <LoaderIcon /> : null}</p>
