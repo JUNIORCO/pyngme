@@ -22,7 +22,10 @@ export default function CreatePyng({
         onClick={() =>
           openModal(
             <video loop controls>
-              <source src="/pyngme_full.mp4" type="video/mp4" />
+              <source
+                src="https://pub-2cca69ba197d421a909e93dc4579c0c5.r2.dev/pyngme_full.mp4"
+                type="video/mp4"
+              />
               Your browser does not support the video tag.
             </video>,
           )
