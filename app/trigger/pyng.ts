@@ -101,19 +101,24 @@ export const pyngTask = schedules.task({
       reflection: z.string(),
       shouldSendEmail: z.boolean(),
     });
+
+    const messages = [
+      { role: "system" as const, content: SYSTEM_PROMPT },
+      {
+        role: "user" as const,
+        content: USER_PROMPT(
+          previousRun.scrape,
+          markdown,
+          currentPyng.condition,
+        ),
+      },
+    ];
+
+    console.log("messages: ", messages);
+
     const completion = await openai.beta.chat.completions.parse({
       model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: SYSTEM_PROMPT },
-        {
-          role: "user",
-          content: USER_PROMPT(
-            previousRun.scrape,
-            markdown,
-            currentPyng.condition,
-          ),
-        },
-      ],
+      messages,
       response_format: zodResponseFormat(
         ShouldSendEmailReasoning,
         "should_send_email_reasoning",
