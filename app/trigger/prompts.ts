@@ -20,6 +20,9 @@ export const USER_PROMPT = (
     .map((part) => (part.added ? part.value : part.removed ? part.value : ""))
     .join("");
 
+  console.log("diff length: ", diffString.length);
+  console.log("diff: ", diffString);
+
   return `Previous run:
 ========================================
 ${previous}
