@@ -1,5 +1,6 @@
 import { RunStatus } from "@prisma/client";
 import { schedules } from "@trigger.dev/sdk/v3";
+import { diffWords } from "diff";
 import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { Resend } from "resend";
@@ -102,15 +103,42 @@ export const pyngTask = schedules.task({
       shouldSendEmail: z.boolean(),
     });
 
+    const diff = diffWords(previousRun.scrape, markdown);
+    const diffString = diff
+      .map((part) => (part.added ? part.value : part.removed ? part.value : ""))
+      .join("");
+
+    console.log("diff length: ", diffString.length);
+    console.log("diff: ", diffString);
+
+    if (diffString.length === 0) {
+      console.log("No diff, skipping...");
+      const run = await prisma.run.create({
+        data: {
+          status: RunStatus.Success,
+          scrape: markdown,
+          reasoning: "No diff, skipping...",
+          sentEmail: false,
+          pyngId,
+          clerkUserId: currentPyng.clerkUserId,
+        },
+      });
+
+      return {
+        runId: run.id,
+      };
+    }
+
     const messages = [
       { role: "system" as const, content: SYSTEM_PROMPT },
       {
         role: "user" as const,
-        content: USER_PROMPT(
-          previousRun.scrape,
-          markdown,
-          currentPyng.condition,
-        ),
+        content: USER_PROMPT({
+          previousRun: previousRun.scrape,
+          currentRun: markdown,
+          diff: diffString,
+          condition: currentPyng.condition,
+        }),
       },
     ];
 
@@ -158,9 +186,10 @@ export const pyngTask = schedules.task({
       subject: "A Pyng has been triggered",
       html: `
         <div>
-    <h2>Hello,</h2>
+    <h2>Hey!</h2>
     <p>The Pyng "${currentPyng.name}" has been triggered.</p>
     <p>See it <a href="https://trypyngme.com/pyngs">here</a>.</p>
+    <p>Reasoning: ${message?.reasoning}</p>
     <p>Thanks for using Pyngme.</p>
   </div>
       `,

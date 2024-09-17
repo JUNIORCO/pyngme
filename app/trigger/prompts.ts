@@ -10,32 +10,30 @@ Your role is to determine whether we should send an email. Go over all the infor
 You will win $1000 if you can correctly determine whether we should send an email. Good luck!
 `;
 
-export const USER_PROMPT = (
-  previous: string,
-  current: string,
-  condition: string,
-) => {
-  const diff = diffWords(previous, current);
-  const diffString = diff
-    .map((part) => (part.added ? part.value : part.removed ? part.value : ""))
-    .join("");
-
-  console.log("diff length: ", diffString.length);
-  console.log("diff: ", diffString);
-
+export const USER_PROMPT = ({
+  previousRun,
+  currentRun,
+  diff,
+  condition,
+}: {
+  previousRun: string;
+  currentRun: string;
+  diff: string;
+  condition: string;
+}) => {
   return `Previous run:
 ========================================
-${previous}
+${previousRun}
 ========================================
 
 Current run:
 ========================================
-${current}
+${currentRun}
 ========================================
 
 Diff:
 ========================================
-${diffString}
+${diff}
 ========================================
 
 Condition:
